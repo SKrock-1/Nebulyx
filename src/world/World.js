@@ -1,5 +1,5 @@
 import {
-  AdditiveBlending, BackSide, BufferAttribute, BufferGeometry, CanvasTexture, CatmullRomCurve3, EdgesGeometry, ExtrudeGeometry, LineBasicMaterial, Shape, ShapeGeometry, Sprite, SpriteMaterial, Clock, Color,
+  AdditiveBlending, BackSide, BufferAttribute, BufferGeometry, CanvasTexture, CatmullRomCurve3, EdgesGeometry, LineBasicMaterial, Shape, ShapeGeometry, Sprite, SpriteMaterial, Clock, Color,
   DirectionalLight, DoubleSide, Euler, Fog, Group, LineSegments, Mesh, MeshBasicMaterial, MeshPhysicalMaterial, Object3D,
   PerspectiveCamera, PlaneGeometry, PMREMGenerator, Points, PointsMaterial, Quaternion, Scene,
   ShaderMaterial, SphereGeometry, SRGBColorSpace, ACESFilmicToneMapping, TubeGeometry, Vector3,
@@ -41,10 +41,11 @@ const STATIONS = FLOOR.slice(0, 4);
 const LOGO_CX = 54;
 const LOGO_CY = 53;
 const LOGO_SIZE = 0.046;
-const LOGO_DROP = 0.7;
+const LOGO_MIN_SCALE = 0.6;
+const LOGO_DROP = 1.05;
 const LOGO_GLOW = 300;
 const STAR_COUNT = LOW_POWER ? 900 : 2200;
-const MAX_DPR = LOW_POWER ? 1.5 : 1.75;
+const MAX_DPR = LOW_POWER ? 1.5 : 2;
 const MIN_DPR = LOW_POWER ? 0.85 : 1;
 const QUALITY_WINDOW = LOW_POWER ? 45 : 90;
 const INTRO_ROLL = LOW_POWER ? 110 : 220;
@@ -63,17 +64,99 @@ function logoShape(points) {
   return s;
 }
 
+function insideQuad(quad, x, y) {
+  return quad.every(([ax, ay], i) => {
+    const [bx, by] = quad[(i + 1) % quad.length];
+    return (bx - ax) * (y - ay) - (by - ay) * (x - ax) >= 0;
+  });
+}
+
+function starLogoGeometry() {
+  const quads = [LOGO_LEFT, LOGO_DIAGONAL, LOGO_RIGHT];
+  const edges = LOGO_OUTLINE.map((p, i) => [p, LOGO_OUTLINE[(i + 1) % LOGO_OUTLINE.length]]).concat(LOGO_INNER_SEAMS);
+  const lengths = edges.map(([a, b]) => Math.hypot(b[0] - a[0], b[1] - a[1]));
+  const perimeter = lengths.reduce((sum, v) => sum + v, 0);
+  const positions = new Float32Array(STAR_LOGO_COUNT * 3);
+  const seeds = new Float32Array(STAR_LOGO_COUNT * 3);
+  for (let i = 0; i < STAR_LOGO_COUNT; i++) {
+    let x;
+    let y;
+    if (i < STAR_LOGO_COUNT * STAR_LOGO_EDGE_SHARE) {
+      let pick = Math.random() * perimeter;
+      let k = 0;
+      while (pick > lengths[k]) pick -= lengths[k++];
+      const [from, to] = edges[k];
+      const t = pick / lengths[k];
+      x = from[0] + (to[0] - from[0]) * t + (Math.random() - 0.5) * 0.55;
+      y = from[1] + (to[1] - from[1]) * t + (Math.random() - 0.5) * 0.55;
+    } else {
+      do {
+        x = 12 + Math.random() * 84;
+        y = 6 + Math.random() * 94;
+      } while (!quads.some((q) => insideQuad(q, x, y)));
+    }
+    positions[i * 3] = x - LOGO_CX;
+    positions[i * 3 + 1] = LOGO_CY - y;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 5;
+    seeds[i * 3] = Math.random();
+    seeds[i * 3 + 1] = Math.random();
+    seeds[i * 3 + 2] = Math.random();
+  }
+  const geometry = new BufferGeometry();
+  geometry.setAttribute('position', new BufferAttribute(positions, 3));
+  geometry.setAttribute('seed', new BufferAttribute(seeds, 3));
+  return geometry;
+}
+
 function landingKick(intro) {
   return intro > 0.82 && intro < 1 ? Math.sin((Math.PI * (intro - 0.82)) / 0.18) : 0;
 }
 const LOGO_GLOW_ALPHA = 0.55;
 const LOGO_LEFT = [[12, 20], [36, 6], [36, 74], [12, 88]];
+const LOGO_OUTLINE = [[12, 20], [36, 6], [36, 28], [76, 80], [76, 34], [96, 20], [96, 88], [76, 100], [36, 48], [36, 74], [12, 88]];
+const STAR_LOGO_COUNT = LOW_POWER ? 3400 : 11000;
+const STAR_LOGO_EDGE_SHARE = 0.5;
+const LOGO_INNER_SEAMS = [[[36, 28], [36, 48]], [[76, 80], [76, 100]]];
 const LOGO_DIAGONAL = [[36, 28], [76, 80], [76, 100], [36, 48]];
 const LOGO_RIGHT = [[76, 34], [96, 20], [96, 88], [76, 100]];
 
 const UP = new Vector3(0, 1, 0);
 const X_AXIS = new Vector3(1, 0, 0);
 const FACE_UP = new Quaternion().setFromAxisAngle(X_AXIS, -Math.PI / 2);
+
+const starLogoVertex = /* glsl */ `
+  attribute vec3 seed;
+  uniform float uTime;
+  uniform float uScatter;
+  uniform float uScale;
+  varying float vTwinkle;
+  varying float vMix;
+  void main() {
+    vec3 p = position;
+    p += (seed - 0.5) * vec3(150.0, 130.0, 120.0) * uScatter;
+    p.xy += vec2(sin(uTime * 0.5 + seed.x * 40.0), cos(uTime * 0.42 + seed.y * 40.0)) * 0.35;
+    vec4 mv = modelViewMatrix * vec4(p, 1.0);
+    vMix = clamp(dot(position.xy, vec2(0.55, -0.83)) / 104.0 + 0.5, 0.0, 1.0);
+    float sweep = smoothstep(0.14, 0.0, abs(fract(uTime * 0.06) * 1.5 - 0.25 - vMix));
+    vTwinkle = 0.72 + 0.28 * sin(uTime * 2.2 + seed.z * 60.0) + sweep * 1.5;
+    float flare = step(0.97, seed.y) * 1.3 + 1.0;
+    gl_Position = projectionMatrix * mv;
+    gl_PointSize = clamp(uScale * (0.03 + seed.x * 0.045) * flare / -mv.z, 1.4, 6.0);
+  }
+`;
+const starLogoFragment = /* glsl */ `
+  uniform float uOpacity;
+  varying float vTwinkle;
+  varying float vMix;
+  void main() {
+    float d = length(gl_PointCoord - 0.5);
+    float a = (1.0 - smoothstep(0.12, 0.5, d)) * vTwinkle * uOpacity;
+    if (a < 0.004) discard;
+    vec3 color = mix(vec3(1.0), vec3(0.62, 0.72, 1.0), smoothstep(0.0, 0.55, vMix));
+    color = mix(color, vec3(0.36, 0.48, 1.0), smoothstep(0.55, 1.0, vMix));
+    gl_FragColor = vec4(color * a * 1.25, a);
+  }
+`;
 
 const skyVertex = /* glsl */ `
   varying vec3 vDir;
@@ -125,6 +208,7 @@ export default class World {
     this.buildTiles();
     this.buildPath();
     this.buildLogo();
+    this.buildStarLogo();
     this.buildTunnel();
 
     this.timeline = createTimeline();
@@ -321,29 +405,7 @@ export default class World {
   }
 
   buildLogo() {
-    const shape = logoShape;
-    const extrude = { depth: 9, bevelEnabled: true, bevelThickness: 1.2, bevelSize: 0.9, bevelSegments: LOW_POWER ? 1 : 3 };
-    this.renderer.transmissionResolutionScale = 0.5;
-    const solid = new MeshPhysicalMaterial(LOW_POWER ? {
-      color: '#3a5bff', metalness: 0.2, roughness: 0.12, envMapIntensity: 1.6,
-      emissive: new Color('#3a5bff'), emissiveIntensity: 0.4,
-      transparent: true, opacity: 0.82,
-    } : {
-      color: '#dfe6ff', metalness: 0, roughness: 0.06, transmission: 1, ior: 1.5, thickness: 1.4,
-      attenuationColor: new Color('#3a5bff'), attenuationDistance: 5,
-      clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 1.6,
-      emissive: new Color('#3a5bff'), emissiveIntensity: 0.34,
-    });
-    const light = new MeshPhysicalMaterial({
-      color: '#e8edff', metalness: 1, roughness: 0.1, envMapIntensity: 1.8,
-      clearcoat: LOW_POWER ? 0 : 1, clearcoatRoughness: 0.05,
-    });
     this.logo = new Group();
-    this.logo.add(
-      new Mesh(new ExtrudeGeometry([shape(LOGO_LEFT), shape(LOGO_RIGHT)], extrude), solid),
-      new Mesh(new ExtrudeGeometry(shape(LOGO_DIAGONAL), extrude), light),
-    );
-    this.logo.children.forEach((m) => m.geometry.translate(0, 0, -4.5));
     this.scene.add(this.logo);
 
     const canvas = document.createElement('canvas');
@@ -365,6 +427,24 @@ export default class World {
     }));
     this.logoGlow.renderOrder = -1;
     this.scene.add(this.logoGlow);
+  }
+
+  buildStarLogo() {
+    this.starLogo = new Points(starLogoGeometry(), new ShaderMaterial({
+      vertexShader: starLogoVertex,
+      fragmentShader: starLogoFragment,
+      transparent: true,
+      depthWrite: false,
+      blending: AdditiveBlending,
+      uniforms: {
+        uTime: { value: 0 },
+        uScatter: { value: 1 },
+        uScale: { value: 400 },
+        uOpacity: { value: 0 },
+      },
+    }));
+    this.starLogo.frustumCulled = false;
+    this.logo.add(this.starLogo);
   }
 
   buildTunnel() {
@@ -693,7 +773,12 @@ export default class World {
       const sway = reduced ? 0 : Math.sin(time * 0.35) * 0.32;
       this.logo.position.set(S.tx, S.ty + S.ringY - LOGO_DROP + (reduced ? 0 : Math.sin(time * 0.6) * 0.14), S.tz);
       this.logo.rotation.set(0.06, this.camera.rotation.y + sway + this.vel * 0.5 + this.fly * INTRO_SPIN, 0);
-      this.logo.scale.setScalar(size);
+      this.logo.scale.setScalar(Math.max(S.logo, LOGO_MIN_SCALE) * LOGO_SIZE);
+      const starLogo = this.starLogo.material.uniforms;
+      starLogo.uTime.value = reduced ? 0 : time;
+      starLogo.uScale.value = this.starUniforms.uScale.value;
+      starLogo.uOpacity.value = clamp((S.logo - 0.08) * 3.2, 0, 1) * (1 - S.light);
+      starLogo.uScatter.value = Math.max(1 - smooth(0.08, 0.55, S.logo), this.fly ?? 0);
       this.logoGlow.position.copy(this.logo.position).addScaledVector(this.viewDir, 2.5);
       this.logoGlow.scale.setScalar(size * LOGO_GLOW);
       this.logoGlow.material.opacity = clamp(S.logo, 0, 1) * LOGO_GLOW_ALPHA;

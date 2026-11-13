@@ -15,7 +15,7 @@ const FRAMES = {
   welcome: frame({
     tx: 2.6, ty: 1.1, tz: -3, azim: 16, elev: 9, dist: 15, pan: 0.34, panY: 0.34, sky: 0.5, dust: 0.25,
     gx: 2, gy: -2.2, gz: -9, gYaw: -14, gPitch: 34, wave: 0.8, flow: 2.4,
-    orbit: 1, ring: 5.6, ringY: 1.4, ringTilt: 22, ringDepth: 1, ringScale: 1.1, ringPace: 0.12, logo: 0.86,
+    orbit: 1, ring: 5.6, ringY: 1.4, ringTilt: 22, ringDepth: 1, ringScale: 1.1, ringPace: 0.12, logo: 0.9,
   }),
   about: frame({
     tx: 0, ty: 1.5, tz: 0, azim: 5, elev: 4, dist: 11, roll: -2, fov: 42, sky: -0.5, dust: 1,
@@ -84,7 +84,7 @@ const NARROW = {
   contact: { pan: 0, panY: 0.5 },
 };
 
-const HOLD_SCREENS = 1.7;
+const HOLD_SCREENS = 1.1;
 const ease = (t) => t * 0.7 + t * t * (3 - 2 * t) * 0.3;
 
 export function createTimeline() {

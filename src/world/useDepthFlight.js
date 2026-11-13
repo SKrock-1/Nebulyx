@@ -4,17 +4,19 @@ import { worldState } from './store';
 import { LOW_POWER } from './quality';
 
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-const SLANT = Math.tan((30 * Math.PI) / 180);
 const IDLE_CHECK = 30;
+const ARRIVE_SETTLE = 0.1;
+const LEAVE_SPAN = 0.55;
 const PINNED_MIN = 0.75;
 
 function look(d) {
   if (d >= 0) {
-    const e = d * d * (3 - 2 * d);
-    return { s: 1 - 0.32 * e, o: clamp(1 - d * 1.35, 0, 1), b: 9 * e, k: 12 * e };
+    const p = clamp((d - ARRIVE_SETTLE) / (1 - ARRIVE_SETTLE), 0, 1);
+    const e = p * p * (3 - 2 * p);
+    return { s: 1 - 0.22 * e, o: clamp(1 - p * 1.25, 0, 1), b: 7 * e, k: 8 * e, l: p };
   }
-  const e = -d;
-  return { s: 1 + 0.25 * e + 1.1 * e * e, o: clamp(1 - e * 1.7, 0, 1), b: 12 * e, k: -16 * e };
+  const p = clamp(-d / LEAVE_SPAN, 0, 1);
+  return { s: 1 + 0.1 * p, o: 1 - p, b: 8 * p, k: -10 * p, l: 0 };
 }
 
 export function useDepthFlight() {
@@ -25,7 +27,6 @@ export function useDepthFlight() {
       el.style.transformOrigin = '50% 50%';
     });
 
-    const band = document.querySelector('[data-slant-wipe]');
     let lastY = -1;
     let idle = 0;
     const tick = () => {
@@ -34,7 +35,6 @@ export function useDepthFlight() {
       lastY = y;
       if (idle > 0 && idle % IDLE_CHECK !== 0) return;
       const screen = window.innerHeight;
-      let wipe = -1;
       for (const it of items) {
         const { el } = it;
         it.h = el.offsetHeight;
@@ -50,8 +50,7 @@ export function useDepthFlight() {
         if (top >= vh || bottom <= 0) d = top >= vh ? 1 : -1;
         else if (top > 0) { d = top / vh; ty = -top; }
         else if (bottom < vh) { d = -(vh - bottom) / vh; ty = vh - bottom; }
-        if (d > 0 && d < 1 && el.dataset.wipe === 'true') wipe = 1 - d;
-        const { s, o, b, k } = look(d);
+        const { s, o, b, k, l } = look(d);
         const hidden = o <= 0.001;
         const key = hidden ? 'h' : `${ty.toFixed(1)}|${s.toFixed(4)}|${o.toFixed(3)}|${b.toFixed(1)}`;
         if (key === it.key) continue;
@@ -72,16 +71,8 @@ export function useDepthFlight() {
         el.style.opacity = o.toFixed(3);
         el.style.filter = !LOW_POWER && b > 0.2 ? `blur(${b.toFixed(1)}px)` : '';
         el.style.pointerEvents = Math.abs(d) > 0.35 ? 'none' : '';
-        el.style.setProperty('--d', Math.max(0, d).toFixed(3));
-        el.setAttribute('data-arriving', d > 0.002 ? 'true' : 'false');
-      }
-      if (band) {
-        const on = wipe >= 0;
-        band.dataset.active = on ? 'true' : 'false';
-        if (on) {
-          const reach = screen * 0.5 + band.offsetHeight * 0.5 + (SLANT * window.innerWidth) / 2;
-          band.style.transform = `translate3d(0, ${((1 - 2 * wipe) * reach).toFixed(1)}px, 0) skewY(-30deg)`;
-        }
+        el.style.setProperty('--d', l.toFixed(3));
+        el.setAttribute('data-arriving', l > 0.002 ? 'true' : 'false');
       }
     };
 

@@ -47,7 +47,6 @@ export default function App() {
       <div data-entered={ready ? 'true' : 'false'} className="relative text-white antialiased">
         <WorldCanvas />
         <div aria-hidden="true" className="vignette" />
-        <div aria-hidden="true" data-slant-wipe data-active="false" className="slant-wipe" />
         <SiteNav chapter={chapter} onBook={() => book()} />
         <ChapterTag chapter={chapter} />
         <ScrollRail chapter={chapter} />

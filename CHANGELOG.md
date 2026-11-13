@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0] — 2026-11-13
+
+### Added
+- Hero N logo built from thousands of stars that scatter on scroll
+
+### Changed
+- Closing NEBULYX wordmark is a subtle hairline glass outline
+- Smoother chapter handoffs, with the 3D world in step with the text
+
+### Removed
+- Blue slanted wipe banners between chapters
+
 ## [1.1.0] — 2026-11-06
 
 ### Added

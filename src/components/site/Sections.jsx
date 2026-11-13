@@ -106,7 +106,7 @@ export function Services({ onBookService }) {
   return (
     <section id="services" data-kf="services" ref={ref} className="relative min-h-[440vh]">
       <span data-kf="services-turn" aria-hidden="true" className="absolute left-0 h-px w-px pointer-events-none" style={{ top: '70%' }} />
-      <div data-depth data-wipe="true" className="sticky top-0 min-h-[100svh] flex items-start lg:items-center pt-24 lg:pt-0 overflow-hidden">
+      <div data-depth className="sticky top-0 min-h-[100svh] flex items-start lg:items-center pt-24 lg:pt-0 overflow-hidden">
         <span
           key={`n${active}`}
           aria-hidden="true"
@@ -319,7 +319,7 @@ export function Work() {
   return (
     <section id="work" data-kf="work" ref={ref} className={`relative work-room ${reduced ? '' : 'min-h-[400vh]'}`}>
       <span data-kf="work-fly" aria-hidden="true" className="absolute left-0 h-px w-px pointer-events-none" style={{ top: '52%' }} />
-      <div data-depth data-wipe="true" className={`${reduced ? 'py-28' : 'sticky top-0 h-[100svh] overflow-hidden'} flex flex-col justify-center`}>
+      <div data-depth className={`${reduced ? 'py-28' : 'sticky top-0 h-[100svh] overflow-hidden'} flex flex-col justify-center`}>
         <div
           className="w-full mx-auto max-w-[1600px] px-5 sm:px-8"
           style={reduced ? undefined : {
@@ -418,7 +418,7 @@ export function Studio() {
   return (
     <section id="studio" data-kf="studio" className="relative min-h-[190vh]">
       <span data-kf="studio-orbit" aria-hidden="true" className="absolute left-0 h-px w-px pointer-events-none" style={{ top: '50%' }} />
-      <div data-depth data-wipe="true" className="sticky top-0 min-h-[100svh] flex items-center pt-20 pb-16 lg:py-0">
+      <div data-depth className="sticky top-0 min-h-[100svh] flex items-center pt-20 pb-16 lg:py-0">
         <div className="w-full mx-auto max-w-[1600px] px-5 sm:px-8 grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-6">
             <Split lines={['One team.', 'Every service.']} className="font-display font-medium text-white text-[clamp(2.6rem,6vw,6rem)] leading-[0.96] tracking-[-0.02em]" />
@@ -458,7 +458,7 @@ export function Contact({ onBook }) {
           <span>You own what we build</span>
         </footer>
       </div>
-      <div aria-hidden="true" className="wordmark mt-6 font-display font-semibold text-white leading-[0.78] tracking-[-0.03em] text-center select-none">
+      <div aria-hidden="true" className="wordmark mt-6 font-display font-light text-white leading-[0.78] tracking-[0.01em] text-center select-none">
         {'NEBULYX'.split('').map((ch, i) => (
           <span key={i} className="wm-char" style={{ '--i': i }}>{ch}</span>
         ))}

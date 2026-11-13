@@ -39,7 +39,7 @@ export function useWorldScroll() {
     let tops = measure();
     let current = -1;
     const onScroll = () => {
-      const y = window.scrollY + window.innerHeight * 0.35;
+      const y = window.scrollY + window.innerHeight * 0.5;
       let k = 0;
       while (k < tops.length - 1 && y >= tops[k + 1]) k++;
       const start = tops[k];
