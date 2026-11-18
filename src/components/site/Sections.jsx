@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Split from './Split';
 import { ArrowRight, ArrowDown } from 'lucide-react';
 import { SERVICES_DATA } from '../../data/services';
+import { CONTACT } from '../../data/contact';
 import { scrollToId } from '../../world/useWorldScroll';
 import { worldState } from '../../world/store';
 import { LOW_POWER } from '../../world/quality';
@@ -73,7 +74,7 @@ export function About() {
         <div className="max-w-4xl text-center">
           <Split lines={['Designed with care.', 'Built to be used.']} className="font-display font-medium text-white text-[clamp(2.6rem,6.2vw,6.4rem)] leading-[0.98] tracking-[-0.02em]" />
           <p data-reveal className="mt-8 mx-auto max-w-xl text-[17px] leading-relaxed text-[#b6bccb]">
-            Nebulyx designs, builds and grows launches for founders. Design, engineering, AI and growth sit in one team, so nothing gets lost between agencies.
+            Nebulyx is a studio based in {CONTACT.location}. We design, build and grow launches for founders, with design, engineering, AI and growth under one roof, so nothing gets lost between agencies.
           </p>
           <p data-reveal className="mt-14 font-display text-[clamp(1.4rem,2.6vw,2.4rem)] leading-snug tracking-[-0.02em] text-white">
             Five vendors means five handovers.
@@ -449,13 +450,20 @@ export function Contact({ onBook }) {
         <p data-reveal className="mt-6 max-w-md text-[17px] leading-relaxed text-[#b6bccb]">
           Tell us what you want to build and when. We'll reply with a written scope, timeline and price. No commitment until you approve them.
         </p>
-        <button type="button" onClick={onBook} className="stagger-item btn-primary h-12 px-5 text-sm mt-8" style={{ '--i': 3 }}>
-          Book a scoping call <ArrowRight className="w-4 h-4" aria-hidden="true" />
-        </button>
-        <footer className="mt-20 flex flex-wrap gap-x-8 gap-y-2 text-[13px] text-[#9aa1b2]">
-          <span>© {new Date().getFullYear()} Nebulyx</span>
-          <span>Websites · AI automations · Social growth · AI search · Online stores</span>
-          <span>You own what we build</span>
+        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <button type="button" onClick={onBook} className="stagger-item btn-primary h-12 px-5 text-sm" style={{ '--i': 3 }}>
+            Book a scoping call <ArrowRight className="w-4 h-4" aria-hidden="true" />
+          </button>
+          <span className="text-[15px] text-[#9aa1b2]">
+            or email <a href={`mailto:${CONTACT.email}`} className="focus-ring text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition-colors">{CONTACT.email}</a>
+          </span>
+        </div>
+        <footer className="mt-14 flex flex-wrap gap-x-8 gap-y-2 text-[13px] text-[#9aa1b2]">
+          <span>© {new Date().getFullYear()} Nebulyx · {CONTACT.location}</span>
+          <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className="focus-ring hover:text-white transition-colors">Instagram {CONTACT.instagramHandle}</a>
+          <a href={`mailto:${CONTACT.email}`} className="focus-ring hover:text-white transition-colors">{CONTACT.email}</a>
+          <a href="/privacy.html" className="focus-ring hover:text-white transition-colors">Privacy</a>
+          <a href="/terms.html" className="focus-ring hover:text-white transition-colors">Terms</a>
         </footer>
       </div>
       <div aria-hidden="true" className="wordmark mt-6 font-display font-light text-white leading-[0.78] tracking-[0.01em] text-center select-none">

@@ -19,11 +19,9 @@ function useHeroReveal(ready) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!ready) {
       gsap.set('[data-line]', { yPercent: 115 });
-      gsap.set('#welcome [data-reveal]', { y: 24, autoAlpha: 0 });
       return;
     }
     gsap.to('[data-line]', { yPercent: 0, duration: 1.5, ease: 'expo.out', stagger: 0.12 });
-    gsap.to('#welcome [data-reveal]', { y: 0, autoAlpha: 1, duration: 1.2, ease: 'power3.out', delay: 0.35 });
   }, [ready]);
 }
 

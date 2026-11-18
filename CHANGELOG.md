@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0] — 2026-11-18
+
+### Added
+- Pre-rendered homepage HTML so search engines and AI crawlers can read the content
+- robots.txt, sitemap.xml, FAQPage and ProfessionalService structured data, Open Graph image
+- Privacy Policy and Terms pages, contact email and Instagram links
+- Enquiry form delivered by email through a Vercel function
+
+### Fixed
+- All FAQ answers are now in the page HTML
+- Hero text shows from first paint (LCP)
+
 ## [1.2.0] — 2026-11-13
 
 ### Added

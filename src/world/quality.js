@@ -10,6 +10,6 @@ function detectLowPower() {
   return touch || small || lowMemory || lowCores;
 }
 
-export const LOW_POWER = detectLowPower();
+export const LOW_POWER = typeof window !== 'undefined' && detectLowPower();
 
-document.documentElement.dataset.quality = LOW_POWER ? 'low' : 'high';
+if (typeof document !== 'undefined') document.documentElement.dataset.quality = LOW_POWER ? 'low' : 'high';
