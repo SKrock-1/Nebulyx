@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.2] — 2026-11-19
+
+### Added
+- Service pages: what we need from you, what affects the price, tools we often use, and two more FAQs each (711-792 words per page)
+- Lead form logs the Brevo error status so delivery failures can be diagnosed
+
 ## [1.4.1] — 2026-11-19
 
 ### Added

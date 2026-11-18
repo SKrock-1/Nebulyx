@@ -131,6 +131,34 @@ export default function ServicePage({ id, tone = 'warm' }) {
         </section>
 
         <section className="py-16 sm:py-24 px-5 sm:px-8">
+          <div className="mx-auto max-w-[1200px] grid lg:grid-cols-2 gap-5">
+            <div className="sp-card p-7 sm:p-10" data-io>
+              <h2 className={h2}>What we need from you</h2>
+              <ul className="mt-8 space-y-4">
+                {page.needs.map((n, i) => (
+                  <li key={n} className="flex gap-3 text-[16px] leading-relaxed" style={{ '--cd': `${i * 0.12}s` }}><Check />{n}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="sp-card p-7 sm:p-10" data-io style={delay(1, 0.12)}>
+              <h2 className={h2}>What affects the price</h2>
+              <ul className="mt-8 space-y-4">
+                {page.priceFactors.map((f, i) => (
+                  <li key={f} className="flex gap-3 text-[16px] leading-relaxed" style={{ '--cd': `${i * 0.12}s` }}><Check />{f}</li>
+                ))}
+              </ul>
+              <p className="mt-6 text-[15px] leading-relaxed">You get a fixed, written price after the scoping call. Nothing starts until you approve it.</p>
+            </div>
+          </div>
+          <div className="mx-auto max-w-[1200px] mt-10 flex flex-wrap items-center gap-2" data-io>
+            <span className={`${kicker} mr-2`}>Tools we often use</span>
+            {page.tools.map((t) => (
+              <span key={t} className={`px-3.5 py-2 rounded-full border ${line} bg-[var(--sp-card)] text-[14px] ${ink}`}>{t}</span>
+            ))}
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-24 px-5 sm:px-8">
           <div className="mx-auto max-w-[1200px]">
             <h2 className={`${h2} text-center`} data-io>How it works</h2>
             <div className="sp-steps mt-14" data-io>

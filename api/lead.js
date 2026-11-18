@@ -74,6 +74,8 @@ export default async function handler(req, res) {
   }
 
   if (!response.ok) {
+    const detail = await response.text().catch(() => '');
+    console.error(`Brevo send failed: ${response.status} ${detail.slice(0, 300)}`);
     return res.status(502).json({ error: `We couldn't send your request. Please email us at ${LEAD_TO}.` });
   }
   return res.status(200).json({ ok: true });
