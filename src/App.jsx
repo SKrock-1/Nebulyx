@@ -40,6 +40,14 @@ export default function App() {
 
   const book = (service = '') => setConsult(service);
 
+  useEffect(() => {
+    if (!ready) return;
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has('book')) return;
+    setConsult(params.get('book') || '');
+    window.history.replaceState(null, '', window.location.pathname + window.location.hash);
+  }, [ready]);
+
   return (
     <MotionConfig reducedMotion="user">
       <div data-entered={ready ? 'true' : 'false'} className="relative text-white antialiased">

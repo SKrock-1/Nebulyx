@@ -3,6 +3,8 @@ import Split from './Split';
 import { ArrowRight, ArrowDown } from 'lucide-react';
 import { SERVICES_DATA } from '../../data/services';
 import { CONTACT } from '../../data/contact';
+import { SERVICE_PAGES } from '../../data/servicePages';
+import { servicePath } from './ServicePage';
 import { scrollToId } from '../../world/useWorldScroll';
 import { worldState } from '../../world/store';
 import { LOW_POWER } from '../../world/quality';
@@ -44,6 +46,7 @@ export function Welcome({ onBook }) {
       </div>
       <div className="w-full mx-auto max-w-[1600px] px-5 sm:px-8 pb-24 sm:pb-20 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
         <h1 className="min-w-0 font-display font-medium text-white text-[clamp(3rem,6.9vw,8.4rem)] leading-[0.94] tracking-[-0.02em]">
+          <span className="sr-only">Websites, AI automation and growth for founders: </span>
           <span className="line-mask"><span data-line>Your whole launch,</span></span>
           <span className="line-mask"><span data-line>one team.</span></span>
         </h1>
@@ -133,6 +136,14 @@ export function Services({ onBookService }) {
                 </li>
               ))}
             </ol>
+            <nav aria-label="Service pages" className="mt-10 hidden lg:flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px]">
+              <span className="font-mono text-[11px] tracking-[0.16em] uppercase text-[#7f8799]">Service pages</span>
+              {SERVICES_DATA.map((item) => (
+                <a key={item.id} href={servicePath(SERVICE_PAGES[item.id].slug)} className="focus-ring text-[#b6bccb] underline decoration-white/20 underline-offset-4 hover:text-white hover:decoration-white transition-colors">
+                  {item.shortTitle}
+                </a>
+              ))}
+            </nav>
           </div>
 
           <div className="lg:col-span-4 lg:col-start-6 self-end lg:self-center" aria-live="polite">
@@ -147,9 +158,14 @@ export function Services({ onBookService }) {
                   </li>
                 ))}
               </ul>
-              <button type="button" onClick={() => onBookService(s.title)} className="btn-ghost h-11 px-4 text-sm mt-8">
-                Book a call about {s.shortTitle.toLowerCase()} <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </button>
+              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <button type="button" onClick={() => onBookService(s.title)} className="btn-ghost h-11 px-4 text-sm">
+                  Book a call about {s.shortTitle.toLowerCase()} <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </button>
+                <a href={servicePath(SERVICE_PAGES[s.id].slug)} className="focus-ring text-[14px] text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">
+                  More about {s.shortTitle.toLowerCase()}
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -458,10 +474,9 @@ export function Contact({ onBook }) {
             or email <a href={`mailto:${CONTACT.email}`} className="focus-ring text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition-colors">{CONTACT.email}</a>
           </span>
         </div>
-        <footer className="mt-14 flex flex-wrap gap-x-8 gap-y-2 text-[13px] text-[#9aa1b2]">
+        <footer className="mt-16 pt-6 max-w-[720px] border-t border-white/[0.12] flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-[#7f8799]">
           <span>© {new Date().getFullYear()} Nebulyx · {CONTACT.location}</span>
-          <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className="focus-ring hover:text-white transition-colors">Instagram {CONTACT.instagramHandle}</a>
-          <a href={`mailto:${CONTACT.email}`} className="focus-ring hover:text-white transition-colors">{CONTACT.email}</a>
+          <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className="focus-ring hover:text-white transition-colors">Instagram</a>
           <a href="/privacy.html" className="focus-ring hover:text-white transition-colors">Privacy</a>
           <a href="/terms.html" className="focus-ring hover:text-white transition-colors">Terms</a>
         </footer>
