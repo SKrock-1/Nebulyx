@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.4.3] — 2026-11-19
+
+### Added
+- Weekly Vercel cron that makes one read call to Brevo so the API key is not disabled after 90 days without use
+
 ## [1.4.2] — 2026-11-19
 
 ### Added
