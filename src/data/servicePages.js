@@ -30,7 +30,7 @@ export const SERVICE_PAGES = {
   'platform-automation': {
     slug: 'ai-automation',
     seoTitle: 'AI Automation Services for Startups & Small Teams — Nebulyx',
-    metaDescription: 'AI agents and automated workflows that take repetitive work off your team: lead handling, data entry, invoices and customer requests, connected to your tools.',
+    metaDescription: 'AI agents and automated workflows that take repetitive work off your team: lead handling, data entry, invoices and requests, connected to your tools.',
     h1: 'AI automation for startups and small teams',
     intro: [
       { strong: 'Copy-paste work eats your week.', text: ' Data entry, follow-ups and the same questions, again and again.' },
@@ -51,7 +51,7 @@ export const SERVICE_PAGES = {
   'social-enhancement': {
     slug: 'social-media',
     seoTitle: 'Social Media Growth & Short-Form Content — Nebulyx',
-    metaDescription: 'Short-form video and posts for TikTok, LinkedIn, YouTube and X, planned and scheduled for you, plus a simple process for turning messages into booked calls.',
+    metaDescription: 'Short-form video and posts for TikTok, LinkedIn, YouTube and X, planned and scheduled for you, plus a simple way to turn messages into booked calls.',
     h1: 'Social media growth and short-form content',
     intro: [
       { strong: 'Posting consistently is hard while you build a company.', text: ' Sporadic, off-brand content rarely turns followers into customers.' },
@@ -72,7 +72,7 @@ export const SERVICE_PAGES = {
   'aeo-geo-marketing': {
     slug: 'ai-search',
     seoTitle: 'AI Search Optimization (AEO & GEO) — Nebulyx',
-    metaDescription: 'Get found and described accurately when buyers ask ChatGPT, Perplexity, Claude or Gemini, with audits, structured data and content that answers real questions.',
+    metaDescription: 'Get found and described accurately when buyers ask ChatGPT, Perplexity, Claude or Gemini, with audits, structured data and content that answers questions.',
     h1: 'AI search optimization (AEO and GEO)',
     intro: [
       { strong: 'Buyers now ask AI for recommendations.', text: " If assistants can't find clear facts about you, you're left out or described wrongly." },

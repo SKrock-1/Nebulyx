@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4.1] — 2026-11-19
+
+### Added
+- llms.txt summary for AI assistants and an IndexNow key
+- favicon.ico, 48 px and 192 px icons, apple-touch-icon and a raster logo
+- WebSite structured data; organisation logo now a PNG
+- Security headers: frame-ancestors CSP, X-Frame-Options, Permissions-Policy
+
+### Fixed
+- Service page meta descriptions trimmed to 155 characters or fewer
+
 ## [1.4.0] — 2026-11-19
 
 ### Added
