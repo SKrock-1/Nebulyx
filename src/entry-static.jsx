@@ -4,6 +4,7 @@ import SiteNav from './components/site/SiteNav';
 import { Welcome, About, Services, Process, Work, Studio, Contact } from './components/site/Sections';
 import FaqSection from './components/FaqSection';
 import ServicePage, { servicePath } from './components/site/ServicePage';
+import AboutPage, { ABOUT_PATH } from './components/site/AboutPage';
 import { FAQS } from './data/faqs';
 import { SERVICES_DATA } from './data/services';
 import { SERVICE_PAGES } from './data/servicePages';
@@ -56,6 +57,7 @@ export const SERVICE_ROUTES = SERVICES_DATA.map((service) => {
     url,
     title: page.seoTitle,
     description: page.metaDescription,
+    ogImage: `${SITE}/og/${page.slug}.png`,
     render: () => renderToString(<ServicePage id={service.id} />),
     schemas: [
       {
@@ -87,6 +89,46 @@ export const SERVICE_ROUTES = SERVICES_DATA.map((service) => {
     ],
   };
 });
+
+const ABOUT_URL = `${SITE}${ABOUT_PATH}`;
+
+export const EXTRA_ROUTES = [
+  {
+    id: 'about',
+    path: ABOUT_PATH,
+    url: ABOUT_URL,
+    title: 'About Nebulyx — A Studio for Founders in Chandigarh, India',
+    description: 'Nebulyx is a Chandigarh studio that designs, builds and grows launches for founders worldwide: one team, a written price up front, and you own everything.',
+    ogImage: `${SITE}/og/about.png`,
+    render: () => renderToString(<AboutPage />),
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        name: 'About Nebulyx',
+        url: ABOUT_URL,
+        mainEntity: {
+          '@type': 'ProfessionalService',
+          name: 'Nebulyx',
+          url: `${SITE}/`,
+          email: CONTACT.email,
+          logo: `${SITE}/logo.png`,
+          address: { '@type': 'PostalAddress', addressLocality: 'Chandigarh', addressCountry: 'IN' },
+          areaServed: 'Worldwide',
+          sameAs: [CONTACT.instagram],
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+          { '@type': 'ListItem', position: 2, name: 'About', item: ABOUT_URL },
+        ],
+      },
+    ],
+  },
+];
 
 export const STATIC_PAGES = ['/privacy.html', '/terms.html'];
 export const SITE_URL = SITE;

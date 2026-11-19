@@ -270,6 +270,8 @@ a.sp-card:hover { transform: translateY(-3px); border-color: var(--sp-line-stron
   pointer-events: none;
 }
 .sp-hero-band > * { position: relative; z-index: 1; }
+.sp-hero-band--full::before,
+.sp-hero-band--full .sp-hero-sentinel { bottom: 0; }
 .sp-hero-sentinel { position: absolute; left: 0; right: 0; top: 0; bottom: 220px; pointer-events: none; }
 
 .drift-x { animation: gDriftX var(--dx, 8s) linear infinite; }

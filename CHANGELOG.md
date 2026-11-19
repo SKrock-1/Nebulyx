@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.5.0] — 2026-11-19
+
+### Added
+- About page (/about/) with how-we-work principles, process, services and contact, plus AboutPage and BreadcrumbList schema
+- Per-page Open Graph images for the five service pages and the About page
+
+### Changed
+- About linked from the service page header and every footer, and from llms.txt; sitemap now lists 9 URLs
+
 ## [1.4.3] — 2026-11-19
 
 ### Added

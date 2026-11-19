@@ -477,6 +477,7 @@ export function Contact({ onBook }) {
         <footer className="mt-16 pt-6 max-w-[720px] border-t border-white/[0.12] flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-[#7f8799]">
           <span>© {new Date().getFullYear()} Nebulyx · {CONTACT.location}</span>
           <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className="focus-ring hover:text-white transition-colors">Instagram</a>
+          <a href="/about/" className="focus-ring hover:text-white transition-colors">About</a>
           <a href="/privacy.html" className="focus-ring hover:text-white transition-colors">Privacy</a>
           <a href="/terms.html" className="focus-ring hover:text-white transition-colors">Terms</a>
         </footer>
