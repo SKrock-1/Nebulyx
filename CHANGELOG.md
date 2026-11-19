@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.1] — 2026-11-19
+
+### Added
+- SKROCK signature draws itself in on the About page; founders' knowsAbout added to schema
+
+### Changed
+- Founder cards redesigned: glossy corner-cut initial badges with a shine sweep, drifting aurora band, hover lift, focus tags and bold bios
+
 ## [1.6.0] — 2026-11-19
 
 ### Added

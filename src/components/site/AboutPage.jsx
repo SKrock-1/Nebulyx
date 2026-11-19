@@ -27,6 +27,50 @@ const PRINCIPLES = [
   ['Honest about what AI can do', 'We use AI where it saves real time, keep a person in charge of anything unusual, and never promise rankings, sales or recommendations.'],
 ];
 
+const FOUNDERS = [
+  {
+    name: CONTACT.founder,
+    alias: CONTACT.founderAlias,
+    initials: 'SK',
+    role: 'Founder',
+    primary: true,
+    bio: 'Owns the look, the build and the reach. Sonu designs the brand, engineers the site and the AI automations behind it, and makes sure search engines and AI assistants find everything he ships.',
+    leads: ['Design & brand', 'Engineering & AI', 'Growth & AI search'],
+    link: { href: '/journal/', label: 'Read the Journal →' },
+    signature: true,
+  },
+  {
+    name: CONTACT.coFounder,
+    initials: 'HH',
+    role: 'Co-founder',
+    bio: 'Owns growth and delivery. Hari turns launches into audiences with content, ads and marketing, and runs every project from the first call to the handover, so nothing slips.',
+    leads: ['Growth & marketing', 'Client success & ops'],
+    link: { href: '/?book=', label: 'Book a scoping call →' },
+  },
+];
+
+const SIGNATURE_PATHS = [
+  'M12 104C60 104 100 101 128 99',
+  'M198 32C192 18 166 16 158 30C150 44 168 54 180 62C194 72 198 92 182 104C168 114 140 112 128 99',
+  'M224 16C223 52 218 94 208 142',
+  'M262 28C248 44 236 56 224 65C238 68 248 82 254 100',
+  'M262 100L266 80M266 87C270 80 276 79 281 83',
+  'M298 82C289 80 284 92 289 98C295 103 304 95 302 87C301 82 297 80 294 82',
+  'M330 85C324 79 313 83 313 92C313 100 323 102 330 96',
+  'M344 58L337 100M356 80L341 91L357 100C372 99 392 96 414 94',
+];
+
+function SignatureMark() {
+  return (
+    <svg viewBox="0 0 430 150" role="img" aria-label="Signature: SKROCK" className="sig-draw shrink-0 w-[120px] sm:w-[150px] h-auto -mb-2" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+      <g transform="translate(24 0) skewX(-12)">
+        {SIGNATURE_PATHS.map((d, i) => <path key={d} d={d} pathLength="1" style={{ '--sd': `${(0.5 + i * 0.16).toFixed(2)}s` }} />)}
+      </g>
+      <circle cx="426" cy="94" r="3" fill="currentColor" stroke="none" className="sig-dot" />
+    </svg>
+  );
+}
+
 export default function AboutPage() {
   return (
     <div className="service-page min-h-[100svh] antialiased">
@@ -129,21 +173,38 @@ export default function AboutPage() {
         </section>
 
         <section className="py-16 sm:py-24 px-5 sm:px-8">
-          <div className="mx-auto max-w-[900px]">
-            <h2 className={`${h2} text-center`} data-io>Founders</h2>
-            <ul className="mt-12 grid sm:grid-cols-2 gap-5">
-              <li className="sp-card p-7 sm:p-9 flex flex-col" data-io>
-                <span aria-hidden="true" className="grid place-items-center w-14 h-14 rounded-full bg-[var(--sp-accent)] text-white font-display text-[18px]">SK</span>
-                <p className={`mt-6 font-display text-[24px] leading-tight ${ink}`}>{CONTACT.founder}</p>
-                <p className={`mt-1 text-[15px] ${muted}`}>Founder · {CONTACT.founderAlias}</p>
-                <p className="mt-4 text-[15px] leading-relaxed">Writes the <a href="/journal/" className={link}>Nebulyx Journal</a>, plain guides for founders on websites, AI and growth.</p>
-                <img src="/signature.svg" alt="Signature: SKROCK" width="180" height="63" loading="lazy" className="mt-6 w-[180px] h-auto -ml-2" />
-              </li>
-              <li className="sp-card p-7 sm:p-9 flex flex-col" data-io style={delay(1)}>
-                <span aria-hidden="true" className="grid place-items-center w-14 h-14 rounded-full bg-[var(--sp-tint)] text-[color:var(--sp-accent-ink)] font-display text-[18px]">HH</span>
-                <p className={`mt-6 font-display text-[24px] leading-tight ${ink}`}>{CONTACT.coFounder}</p>
-                <p className={`mt-1 text-[15px] ${muted}`}>Co-founder</p>
-              </li>
+          <div className="mx-auto max-w-[1000px]">
+            <p className={`${kicker} text-center`} data-io>Two founders. One team.</p>
+            <h2 className={`${h2} mt-4 text-center`} data-io style={delay(1)}>Founders</h2>
+            <ul className="mt-12 grid md:grid-cols-2 gap-5">
+              {FOUNDERS.map((f, i) => (
+                <li key={f.name} className={`founder-card sp-card overflow-hidden flex flex-col ${f.primary ? 'is-primary' : ''}`} data-io style={delay(i, 0.12)}>
+                  <div className="founder-band relative h-32">
+                    <span aria-hidden="true" className="founder-aurora-clip"><span className="founder-aurora" /></span>
+                    <span className="absolute right-6 top-5 font-mono text-[11px] tracking-[0.18em] uppercase text-white/70">{f.role}</span>
+                    <span aria-hidden="true" className="founder-badge-wrap absolute left-7 sm:left-9 -bottom-10">
+                      <span className="founder-badge">
+                        <span className="founder-initials">{f.initials}</span>
+                      </span>
+                    </span>
+                  </div>
+                  <div className="px-7 sm:px-9 pt-14 pb-8 flex flex-col flex-1">
+                    <p className={`font-display text-[26px] leading-tight ${ink}`}>{f.name}</p>
+                    {f.alias && <p className={`mt-1 font-mono text-[12px] tracking-[0.16em] uppercase ${muted}`}>aka {f.alias}</p>}
+                    <p className="mt-4 text-[15px] leading-relaxed">{f.bio}</p>
+                    <p className={`mt-6 ${kicker}`}>Leads</p>
+                    <ul className="mt-3 flex flex-wrap gap-2">
+                      {f.leads.map((l) => (
+                        <li key={l} className={`founder-tag px-3.5 py-1.5 rounded-full text-[13px] ${ink}`}>{l}</li>
+                      ))}
+                    </ul>
+                    <div className="mt-auto pt-7 flex items-end justify-between gap-4">
+                      {f.link ? <a href={f.link.href} className={`whitespace-nowrap text-[14px] ${link}`}>{f.link.label}</a> : <span />}
+                      {f.signature && <SignatureMark />}
+                    </div>
+                  </div>
+                </li>
+              ))}
             </ul>
           </div>
         </section>

@@ -204,8 +204,8 @@ export const EXTRA_ROUTES = [
           address: { '@type': 'PostalAddress', addressLocality: 'Chandigarh', addressCountry: 'IN' },
           areaServed: 'Worldwide',
           founder: [
-            { '@type': 'Person', name: CONTACT.founder, alternateName: CONTACT.founderAlias, jobTitle: 'Founder' },
-            { '@type': 'Person', name: CONTACT.coFounder, jobTitle: 'Co-founder' },
+            { '@type': 'Person', name: CONTACT.founder, alternateName: CONTACT.founderAlias, jobTitle: 'Founder', knowsAbout: ['Brand and website design', 'Web engineering', 'AI automation', 'AI search optimization'] },
+            { '@type': 'Person', name: CONTACT.coFounder, jobTitle: 'Co-founder', knowsAbout: ['Growth marketing', 'Social media', 'Client success', 'Project delivery'] },
           ],
           sameAs: [CONTACT.instagram],
         },
