@@ -37,7 +37,7 @@ export default function AboutPage() {
           <nav aria-label="Main" className="hidden md:flex items-center gap-8 text-[14px]">
             <a href="/#services" className={navLink}>Services</a>
             <a href="/#process" className={navLink}>How it works</a>
-            <a href="/#faq" className={navLink}>FAQ</a>
+            <a href="/journal/" className={navLink}>Journal</a>
             <a href={ABOUT_PATH} aria-current="page" className={navLink}>About</a>
           </nav>
           <a href="/?book=" className="sp-btn sp-btn-light h-10 px-5 text-[14px]">Book a call</a>
@@ -129,6 +129,26 @@ export default function AboutPage() {
         </section>
 
         <section className="py-16 sm:py-24 px-5 sm:px-8">
+          <div className="mx-auto max-w-[900px]">
+            <h2 className={`${h2} text-center`} data-io>Founders</h2>
+            <ul className="mt-12 grid sm:grid-cols-2 gap-5">
+              <li className="sp-card p-7 sm:p-9 flex flex-col" data-io>
+                <span aria-hidden="true" className="grid place-items-center w-14 h-14 rounded-full bg-[var(--sp-accent)] text-white font-display text-[18px]">SK</span>
+                <p className={`mt-6 font-display text-[24px] leading-tight ${ink}`}>{CONTACT.founder}</p>
+                <p className={`mt-1 text-[15px] ${muted}`}>Founder · {CONTACT.founderAlias}</p>
+                <p className="mt-4 text-[15px] leading-relaxed">Writes the <a href="/journal/" className={link}>Nebulyx Journal</a>, plain guides for founders on websites, AI and growth.</p>
+                <img src="/signature.svg" alt="Signature: SKROCK" width="180" height="63" loading="lazy" className="mt-6 w-[180px] h-auto -ml-2" />
+              </li>
+              <li className="sp-card p-7 sm:p-9 flex flex-col" data-io style={delay(1)}>
+                <span aria-hidden="true" className="grid place-items-center w-14 h-14 rounded-full bg-[var(--sp-tint)] text-[color:var(--sp-accent-ink)] font-display text-[18px]">HH</span>
+                <p className={`mt-6 font-display text-[24px] leading-tight ${ink}`}>{CONTACT.coFounder}</p>
+                <p className={`mt-1 text-[15px] ${muted}`}>Co-founder</p>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-24 px-5 sm:px-8">
           <div className={`mx-auto max-w-3xl grid sm:grid-cols-2 gap-8 border-t ${line} pt-10`} data-io>
             <div>
               <p className={kicker}>Where we are</p>
@@ -159,6 +179,7 @@ export default function AboutPage() {
       <footer className={`mx-auto max-w-[1200px] px-5 sm:px-8 py-10 border-t ${line} flex flex-wrap gap-x-8 gap-y-2 text-[13px] ${muted}`}>
         <span>© 2026 Nebulyx · {CONTACT.location}</span>
         <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className={footLink}>Instagram</a>
+        <a href="/journal/" className={footLink}>Journal</a>
         <a href="/privacy.html" className={footLink}>Privacy</a>
         <a href="/terms.html" className={footLink}>Terms</a>
       </footer>

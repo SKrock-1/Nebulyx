@@ -47,6 +47,7 @@ export default function ServicePage({ id, tone = 'warm' }) {
             <a href="/#services" className={navLink}>Services</a>
             <a href="/#process" className={navLink}>How it works</a>
             <a href="/#faq" className={navLink}>FAQ</a>
+            <a href="/journal/" className={navLink}>Journal</a>
             <a href="/about/" className={navLink}>About</a>
           </nav>
           <a href={bookHref(service)} className="sp-btn sp-btn-light h-10 px-5 text-[14px]">Book a call</a>
@@ -233,6 +234,7 @@ export default function ServicePage({ id, tone = 'warm' }) {
         <span>© 2026 Nebulyx · {CONTACT.location}</span>
         <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className={footLink}>Instagram {CONTACT.instagramHandle}</a>
         <a href={`mailto:${CONTACT.email}`} className={footLink}>{CONTACT.email}</a>
+        <a href="/journal/" className={footLink}>Journal</a>
         <a href="/about/" className={footLink}>About</a>
         <a href="/privacy.html" className={footLink}>Privacy</a>
         <a href="/terms.html" className={footLink}>Terms</a>

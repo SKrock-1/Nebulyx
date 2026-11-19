@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.6.0] — 2026-11-19
+
+### Added
+- Journal at /journal/ with four founder guides signed by Sonu Kumar (SKROCK), BlogPosting and Blog schema, per-article share images and links to the matching service
+- Hand-drawn SKROCK signature in the article author box
+- Founders section on the About page (Sonu Kumar and co-founder Hari Haran); both founders in ProfessionalService schema
+
+### Changed
+- Journal linked from headers, footers, llms.txt and the sitemap (14 URLs)
+
 ## [1.5.0] — 2026-11-19
 
 ### Added

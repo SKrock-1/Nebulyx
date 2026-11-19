@@ -12,6 +12,14 @@ Every project starts with a short call, then a written scope, timeline and price
 - [AI search optimization (AEO and GEO)](https://www.nebulyx.live/services/ai-search/): Making a business easy for ChatGPT, Perplexity, Claude and Gemini to find and describe accurately, through audits, structured data and answer-focused content.
 - [Online store and dropshipping setup](https://www.nebulyx.live/services/online-stores/): Product research, suppliers, a storefront, automated order handling and first ad campaigns, without holding stock.
 
+## Journal
+
+- [Journal](https://www.nebulyx.live/journal/): Founder guides by Sonu Kumar on websites, AI automation, AI search and online stores.
+- [What AEO and GEO mean](https://www.nebulyx.live/journal/what-is-aeo-and-geo/)
+- [What to automate first](https://www.nebulyx.live/journal/what-to-automate-first/)
+- [The launch website checklist](https://www.nebulyx.live/journal/startup-website-checklist/)
+- [Launching a store without stock](https://www.nebulyx.live/journal/launching-a-store-without-stock/)
+
 ## About
 
 - [About Nebulyx](https://www.nebulyx.live/about/): How the studio works, from first call to handover.

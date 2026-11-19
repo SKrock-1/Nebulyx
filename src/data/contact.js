@@ -4,5 +4,6 @@ export const CONTACT = {
   instagramHandle: '@nebulyx_ai',
   founder: 'Sonu Kumar',
   founderAlias: 'SKROCK',
+  coFounder: 'Hari Haran',
   location: 'Chandigarh, India',
 };
