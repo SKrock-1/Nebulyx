@@ -51,17 +51,19 @@ export function Drift({ vars, className = '', children }) {
 }
 
 const SHAPES = {
-  chamfer: 'M0 0H360V290L290 360H0Z',
-  slant: 'M60 360 160 0H300L200 360Z',
-  circle: 'M180 0A180 180 0 1 1 179.9 0Z',
-  spark: 'M180 0C192 120 240 168 360 180C240 192 192 240 180 360C168 240 120 192 0 180C120 168 168 120 180 0Z',
+  stars: 'M90 76A34 34 0 1 1 89.9 76ZM230 48A22 22 0 1 1 229.9 48ZM270 162A48 48 0 1 1 269.9 162ZM130 240A20 20 0 1 1 129.9 240ZM185 153A12 12 0 1 1 184.9 153ZM60 205A10 10 0 1 1 59.9 205ZM320 81A9 9 0 1 1 319.9 81Z',
+  comet: 'M30 330 210 70A70 70 0 1 1 290 150Z',
+  planet: 'M180 90A90 90 0 1 1 179.9 90ZM20 238A170 50 -20 1 1 340 122A170 50 -20 1 1 20 238ZM48 228A140 28 -20 1 1 312 132A140 28 -20 1 1 48 228Z',
+  cloud: 'M110 60C170 0 260 20 280 90C350 110 370 210 310 260C290 340 180 360 130 310C50 320 0 240 40 180C0 120 50 60 110 60Z',
+  slab: 'M20 104 200 0V256L20 360Z',
+  orbit: 'M180 0A180 180 0 1 1 179.9 0ZM180 64A116 116 0 1 0 180.1 64Z',
 };
 
 export function BgShape({ kind, color, style, drift, d = '0s' }) {
   return (
     <div aria-hidden="true" className="sp-shape" data-io style={{ ...style, '--d': d }}>
       <Drift vars={drift} className="h-full">
-        <svg viewBox="0 0 360 360" aria-hidden="true"><path d={SHAPES[kind]} fill={color} /></svg>
+        <svg viewBox="0 0 360 360" aria-hidden="true"><path d={SHAPES[kind]} fill={color} fillRule="evenodd" /></svg>
       </Drift>
     </div>
   );

@@ -1,5 +1,15 @@
 # Changelog
 
+
+## [1.7.0] — 2026-11-20
+
+### Added
+- Free AI visibility check page (/ai-visibility-check/) with lead form, sample report, FAQ, Service/FAQPage/BreadcrumbList schema and share image
+- Free AI check links in every footer, on the AI search service page and in the AEO/GEO article
+
+### Changed
+- Background shapes redrawn as Nebulyx space motifs: star cluster, comet, ringed planet, nebula cloud, slab and orbit ring
+
 ## [1.6.1] — 2026-11-19
 
 ### Added

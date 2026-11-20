@@ -56,8 +56,8 @@ export default function ServicePage({ id, tone = 'warm' }) {
 
       <div className="sp-hero-band">
         <div data-hero className="sp-hero-sentinel" aria-hidden="true" />
-        <BgShape kind="spark" color="rgba(143,162,255,0.16)" style={{ '--s': '220px', left: '8%', top: '120px' }} d="0.2s" drift={{ '--dx': '11s', '--dy': '17s', '--dr': '23s', '--ar': '12deg' }} />
-        <BgShape kind="chamfer" color="rgba(58,91,255,0.14)" style={{ '--s': '300px', right: '-60px', top: '60px' }} d="0.35s" drift={{ '--dx': '13s', '--dy': '19s', '--dr': '21s', '--ar': '6deg' }} />
+        <BgShape kind="stars" color="rgba(143,162,255,0.16)" style={{ '--s': '220px', left: '8%', top: '120px' }} d="0.2s" drift={{ '--dx': '11s', '--dy': '17s', '--dr': '23s', '--ar': '12deg' }} />
+        <BgShape kind="cloud" color="rgba(58,91,255,0.14)" style={{ '--s': '300px', right: '-60px', top: '60px' }} d="0.35s" drift={{ '--dx': '13s', '--dy': '19s', '--dr': '21s', '--ar': '6deg' }} />
         <section className="relative mx-auto max-w-[1200px] px-5 sm:px-8 pt-16 sm:pt-24 text-center">
           <ul aria-hidden="true" className="sp-chips">
             {service.deliverables.slice(0, 4).map((d, i) => (
@@ -96,8 +96,8 @@ export default function ServicePage({ id, tone = 'warm' }) {
         </section>
 
         <section className="relative py-16 sm:py-24 px-5 sm:px-8">
-          <BgShape kind="chamfer" color="#3a5bff" style={{ '--s': '520px', left: 'max(-200px, -16vw)', top: '-40px' }} drift={{ '--dx': '14s', '--dy': '21s', '--dr': '25s', '--ax': '14px', '--ay': '20px', '--ar': '4deg' }} />
-          <BgShape kind="circle" color="#c3ceff" style={{ '--s': '260px', right: 'max(-90px, -6vw)', bottom: '-60px' }} d="0.2s" drift={{ '--dx': '9s', '--dy': '15s', '--dr': '18s', '--ax': '10px', '--ay': '14px' }} />
+          <BgShape kind="slab" color="#3a5bff" style={{ '--s': '520px', left: 'max(-200px, -16vw)', top: '-40px' }} drift={{ '--dx': '14s', '--dy': '21s', '--dr': '25s', '--ax': '14px', '--ay': '20px', '--ar': '4deg' }} />
+          <BgShape kind="planet" color="#c3ceff" style={{ '--s': '260px', right: 'max(-90px, -6vw)', bottom: '-60px' }} d="0.2s" drift={{ '--dx': '9s', '--dy': '15s', '--dr': '18s', '--ax': '10px', '--ay': '14px' }} />
           <div className="relative mx-auto max-w-[1200px] grid lg:grid-cols-2 gap-5">
             <div className="sp-card p-7 sm:p-10" data-io style={delay(0)}>
               <h2 className={h2}>What you get</h2>
@@ -131,6 +131,19 @@ export default function ServicePage({ id, tone = 'warm' }) {
             </ul>
           </div>
         </section>
+
+        {id === 'aeo-geo-marketing' && (
+          <section className="px-5 sm:px-8 pt-4">
+            <a href="/ai-visibility-check/" className="sp-card focus-ring mx-auto max-w-[1200px] flex flex-wrap items-center justify-between gap-6 p-7 sm:p-9" data-io>
+              <span>
+                <span className={kicker}>Free</span>
+                <span className={`mt-2 block font-display text-[clamp(1.5rem,2.6vw,2rem)] leading-tight ${ink}`}>See what ChatGPT says about your business</span>
+                <span className="mt-2 block text-[16px]">A free AI visibility check across four assistants, with what to fix first.</span>
+              </span>
+              <span className="sp-btn h-12 px-6 text-[15px]">Get my free check</span>
+            </a>
+          </section>
+        )}
 
         <section className="py-16 sm:py-24 px-5 sm:px-8">
           <div className="mx-auto max-w-[1200px] grid lg:grid-cols-2 gap-5">
@@ -217,8 +230,8 @@ export default function ServicePage({ id, tone = 'warm' }) {
         </section>
 
         <section className="relative py-24 sm:py-32 px-5 sm:px-8">
-          <BgShape kind="circle" color="#c3ceff" style={{ '--s': '420px', right: 'max(-160px, -12vw)', top: '-20px' }} drift={{ '--dx': '12s', '--dy': '18s', '--dr': '22s', '--ax': '12px', '--ay': '16px' }} />
-          <BgShape kind="slant" color="#3a5bff" style={{ '--s': '240px', left: 'max(-60px, -4vw)', bottom: '0' }} d="0.2s" drift={{ '--dx': '10s', '--dy': '16s', '--dr': '19s', '--ar': '5deg' }} />
+          <BgShape kind="orbit" color="#c3ceff" style={{ '--s': '420px', right: 'max(-160px, -12vw)', top: '-20px' }} drift={{ '--dx': '12s', '--dy': '18s', '--dr': '22s', '--ax': '12px', '--ay': '16px' }} />
+          <BgShape kind="comet" color="#3a5bff" style={{ '--s': '240px', left: 'max(-60px, -4vw)', bottom: '0' }} d="0.2s" drift={{ '--dx': '10s', '--dy': '16s', '--dr': '19s', '--ar': '5deg' }} />
           <div className="relative mx-auto max-w-3xl text-center" data-io>
             <h2 className={h2}>Tell us what you want to build</h2>
             <p className="mt-5 mx-auto max-w-xl text-[17px] leading-relaxed">You get a written scope, timeline and price after a short call. No commitment until you approve them.</p>
@@ -234,6 +247,7 @@ export default function ServicePage({ id, tone = 'warm' }) {
         <span>© 2026 Nebulyx · {CONTACT.location}</span>
         <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className={footLink}>Instagram {CONTACT.instagramHandle}</a>
         <a href={`mailto:${CONTACT.email}`} className={footLink}>{CONTACT.email}</a>
+        <a href="/ai-visibility-check/" className={footLink}>Free AI check</a>
         <a href="/journal/" className={footLink}>Journal</a>
         <a href="/about/" className={footLink}>About</a>
         <a href="/privacy.html" className={footLink}>Privacy</a>

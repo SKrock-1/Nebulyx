@@ -12,6 +12,10 @@ Every project starts with a short call, then a written scope, timeline and price
 - [AI search optimization (AEO and GEO)](https://www.nebulyx.live/services/ai-search/): Making a business easy for ChatGPT, Perplexity, Claude and Gemini to find and describe accurately, through audits, structured data and answer-focused content.
 - [Online store and dropshipping setup](https://www.nebulyx.live/services/online-stores/): Product research, suppliers, a storefront, automated order handling and first ad campaigns, without holding stock.
 
+## Free AI visibility check
+
+- [Free AI visibility check](https://www.nebulyx.live/ai-visibility-check/): A free report on what ChatGPT, Perplexity, Gemini and Claude say about a business and what to fix first.
+
 ## Journal
 
 - [Journal](https://www.nebulyx.live/journal/): Founder guides by Sonu Kumar on websites, AI automation, AI search and online stores.

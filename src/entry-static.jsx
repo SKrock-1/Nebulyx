@@ -6,6 +6,7 @@ import FaqSection from './components/FaqSection';
 import ServicePage, { servicePath } from './components/site/ServicePage';
 import AboutPage, { ABOUT_PATH } from './components/site/AboutPage';
 import { JournalIndex, ArticlePage } from './components/site/JournalPages';
+import AiCheckPage, { AI_CHECK_PATH, AI_CHECK_FAQS } from './components/site/AiCheckPage';
 import { ARTICLES, AUTHOR, JOURNAL_PATH, articlePath } from './data/journal';
 import { FAQS } from './data/faqs';
 import { SERVICES_DATA } from './data/services';
@@ -179,7 +180,40 @@ const JOURNAL_ROUTES = [
   }),
 ];
 
+const AI_CHECK_URL = `${SITE}${AI_CHECK_PATH}`;
+const AI_CHECK_ROUTE = {
+  id: 'ai-visibility-check',
+  path: AI_CHECK_PATH,
+  url: AI_CHECK_URL,
+  title: 'Free AI Visibility Check: What ChatGPT Says About You | Nebulyx',
+  description: 'Free check of what ChatGPT, Perplexity, Gemini and Claude say about your business, who they recommend instead, and what to fix first.',
+  ogImage: `${SITE}/og/ai-visibility-check.png`,
+  render: () => renderToString(<AiCheckPage />),
+  schemas: [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: 'Free AI visibility check',
+      serviceType: 'AI search visibility audit',
+      description: 'A free report on how ChatGPT, Perplexity, Gemini and Claude describe a business, which competitors they recommend instead, and what to fix first.',
+      url: AI_CHECK_URL,
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      provider: { '@type': 'ProfessionalService', name: 'Nebulyx', url: `${SITE}/` },
+    },
+    faqPage(AI_CHECK_FAQS),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+        { '@type': 'ListItem', position: 2, name: 'Free AI visibility check', item: AI_CHECK_URL },
+      ],
+    },
+  ],
+};
+
 export const EXTRA_ROUTES = [
+  AI_CHECK_ROUTE,
   ...JOURNAL_ROUTES,
   {
     id: 'about',

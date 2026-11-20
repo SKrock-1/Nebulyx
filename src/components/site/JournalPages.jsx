@@ -22,7 +22,7 @@ export function formatDate(iso) {
   return `${d} ${months[m - 1]} ${y}`;
 }
 
-function Shell({ current, crumbs, title, lead, children }) {
+export function Shell({ current, crumbs, title, lead, children }) {
   return (
     <div className="service-page min-h-[100svh] antialiased">
       <script dangerouslySetInnerHTML={{ __html: IO_SCRIPT }} />
@@ -40,8 +40,8 @@ function Shell({ current, crumbs, title, lead, children }) {
 
       <div className="sp-hero-band sp-hero-band--full">
         <div data-hero className="sp-hero-sentinel" aria-hidden="true" />
-        <BgShape kind="spark" color="rgba(143,162,255,0.14)" style={{ '--s': '200px', left: '6%', top: '110px' }} d="0.2s" drift={{ '--dx': '11s', '--dy': '17s', '--dr': '23s', '--ar': '12deg' }} />
-        <BgShape kind="chamfer" color="rgba(58,91,255,0.12)" style={{ '--s': '280px', right: '-80px', top: '50px' }} d="0.35s" drift={{ '--dx': '13s', '--dy': '19s', '--dr': '21s', '--ar': '6deg' }} />
+        <BgShape kind="stars" color="rgba(143,162,255,0.14)" style={{ '--s': '200px', left: '6%', top: '110px' }} d="0.2s" drift={{ '--dx': '11s', '--dy': '17s', '--dr': '23s', '--ar': '12deg' }} />
+        <BgShape kind="comet" color="rgba(58,91,255,0.12)" style={{ '--s': '280px', right: '-80px', top: '50px' }} d="0.35s" drift={{ '--dx': '13s', '--dy': '19s', '--dr': '21s', '--ar': '6deg' }} />
         <section className="relative mx-auto max-w-[900px] px-5 sm:px-8 pt-14 sm:pt-20 pb-20 sm:pb-24 text-center">
           <nav aria-label="Breadcrumb" className="text-[13px] text-white/50">
             <ol className="flex flex-wrap justify-center gap-2">
@@ -62,6 +62,7 @@ function Shell({ current, crumbs, title, lead, children }) {
       <footer className={`mx-auto max-w-[1200px] px-5 sm:px-8 py-10 border-t ${line} flex flex-wrap gap-x-8 gap-y-2 text-[13px] ${muted}`}>
         <span>© 2026 Nebulyx · {CONTACT.location}</span>
         <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className={footLink}>Instagram</a>
+        <a href="/ai-visibility-check/" className={footLink}>Free AI check</a>
         <a href={JOURNAL_PATH} className={footLink}>Journal</a>
         <a href="/about/" className={footLink}>About</a>
         <a href="/privacy.html" className={footLink}>Privacy</a>
@@ -136,6 +137,13 @@ export function ArticlePage({ slug }) {
               )}
             </section>
           ))}
+
+          {article.service === 'aeo-geo-marketing' && (
+            <a href="/ai-visibility-check/" className="mt-12 sp-card focus-ring flex flex-wrap items-center justify-between gap-5 p-6" data-io>
+              <span className={`font-display text-[20px] leading-snug ${ink}`}>Want to know what AI assistants say about you?</span>
+              <span className="sp-btn h-11 px-5 text-[14px]">Get a free check</span>
+            </a>
+          )}
 
           <aside className={`mt-16 pt-8 border-t ${line} flex flex-col sm:flex-row gap-4 sm:gap-6 items-start`} data-io aria-label="About the author">
             <img src="/signature.svg" alt="Signature: SKROCK" width="220" height="80" loading="lazy" className="shrink-0 w-[220px] h-auto -mt-4 -ml-2" />
