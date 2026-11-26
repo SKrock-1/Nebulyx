@@ -1,6 +1,6 @@
 # Nebulyx
 
-> Nebulyx is a studio based in Chandigarh, India, working with founders worldwide. It designs, builds and grows launches: websites, AI automations, social growth, AI search visibility and online stores, delivered by one senior team in fixed-length sprints. Clients own the code, accounts and content.
+> Nebulyx is a studio based in Chandigarh, India, working with founders worldwide. It designs, builds and grows launches: websites, AI automations, social growth, AI search visibility and online stores, delivered by one senior team for a fixed price agreed in writing. Clients own the code, accounts and content.
 
 Every project starts with a short call, then a written scope, timeline and price that the client approves before work begins. Progress is shown every week, everything is tested on real devices, and the work is handed over with notes on how to run and change it.
 
@@ -11,6 +11,16 @@ Every project starts with a short call, then a written scope, timeline and price
 - [Social media growth](https://www.nebulyx.live/services/social-media/): Short-form video and posts for TikTok, LinkedIn, YouTube and X, planned and scheduled, with a process for turning messages into booked calls.
 - [AI search optimization (AEO and GEO)](https://www.nebulyx.live/services/ai-search/): Making a business easy for ChatGPT, Perplexity, Claude and Gemini to find and describe accurately, through audits, structured data and answer-focused content.
 - [Online store and dropshipping setup](https://www.nebulyx.live/services/online-stores/): Product research, suppliers, a storefront, automated order handling and first ad campaigns, without holding stock.
+
+## Work
+
+- [Work](https://www.nebulyx.live/work/): Websites and AI systems built by Nebulyx.
+- [DataBahn website](https://www.nebulyx.live/work/databahn/): Website design and build for a security data platform.
+- [Vibe3D website](https://www.nebulyx.live/work/vibe3d/): Website design and build for an AI rendering tool for architects.
+- [Ecavo website](https://www.nebulyx.live/work/ecavo/): Bilingual website for a Prayagraj flour and spice brand.
+- [RescueFlow AI](https://www.nebulyx.live/work/rescueflow-ai/): AI agent that resolves failed e-commerce deliveries, built for a client.
+- [FraudGuard](https://www.nebulyx.live/work/fraudguard/): Real-time fraud scoring engine, built for a client.
+- [YouTube automation studio](https://www.nebulyx.live/work/youtube-automation/): Research-to-upload video pipeline, built for a client.
 
 ## Free AI visibility check
 
@@ -31,7 +41,7 @@ Every project starts with a short call, then a written scope, timeline and price
 ## Contact
 
 - Email: hello@nebulyx.live
-- Book a scoping call: https://www.nebulyx.live/
+- Request a scoping call: https://www.nebulyx.live/
 - Instagram: https://www.instagram.com/nebulyx_ai/
 
 ## Optional

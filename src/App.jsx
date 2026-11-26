@@ -1,22 +1,24 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import React, { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { MotionConfig } from 'motion/react';
 import WorldCanvas from './world/WorldCanvas';
 import { useWorldScroll } from './world/useWorldScroll';
 import { useDepthFlight } from './world/useDepthFlight';
 import { worldState } from './world/store';
-import './world/quality';
+import { PHONE } from './world/quality';
 import SiteNav from './components/site/SiteNav';
 import ChapterTag from './components/site/ChapterTag';
 import Intro from './components/site/Intro';
 import ScrollRail from './components/site/ScrollRail';
+import PhoneHome from './components/site/PhoneHome';
+import { useIoReveal } from './components/site/labs';
 import { Welcome, About, Services, Process, Work, Studio, Contact } from './components/site/Sections';
 import FaqSection from './components/FaqSection';
-import ConsultationDrawer from './components/ConsultationDrawer';
+const ConsultationDrawer = lazy(() => import('./components/ConsultationDrawer'));
 
 function useHeroReveal(ready) {
   useLayoutEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (PHONE || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!ready) {
       gsap.set('[data-line]', { yPercent: 115 });
       return;
@@ -28,17 +30,22 @@ function useHeroReveal(ready) {
 export default function App() {
   const chapter = useWorldScroll();
   const [consult, setConsult] = useState(null);
-  const [ready, setReady] = useState(false);
+  const [consultExtra, setConsultExtra] = useState(null);
+  const [ready, setReady] = useState(PHONE);
   const onIntroDone = useCallback(() => setReady(true), []);
   useHeroReveal(ready);
   useDepthFlight();
+  useIoReveal(PHONE);
 
   useEffect(() => {
     if (consult === null && ready) worldState.lenis?.start();
     else worldState.lenis?.stop();
   }, [consult, ready]);
 
-  const book = (service = '') => setConsult(service);
+  const book = (service = '', extra = null) => {
+    setConsultExtra(extra);
+    setConsult(service);
+  };
 
   useEffect(() => {
     if (!ready) return;
@@ -47,6 +54,21 @@ export default function App() {
     setConsult(params.get('book') || '');
     window.history.replaceState(null, '', window.location.pathname + window.location.hash);
   }, [ready]);
+
+  const drawer = consult !== null && (
+    <Suspense fallback={null}>
+      <ConsultationDrawer onClose={() => setConsult(null)} preselectedService={consult} initialStage={consultExtra?.stage} initialMessage={consultExtra?.message} tone={PHONE ? 'light' : 'dark'} />
+    </Suspense>
+  );
+
+  if (PHONE) {
+    return (
+      <MotionConfig reducedMotion="user">
+        <PhoneHome onBook={book} />
+        {drawer}
+      </MotionConfig>
+    );
+  }
 
   return (
     <MotionConfig reducedMotion="user">
@@ -68,7 +90,7 @@ export default function App() {
           <Contact onBook={() => book()} />
         </main>
 
-        {consult !== null && <ConsultationDrawer onClose={() => setConsult(null)} preselectedService={consult} />}
+        {drawer}
         <Intro onDone={onIntroDone} />
         <div aria-hidden="true" className="grain" />
       </div>

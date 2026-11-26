@@ -3,11 +3,15 @@ import { renderToString } from 'react-dom/server';
 import SiteNav from './components/site/SiteNav';
 import { Welcome, About, Services, Process, Work, Studio, Contact } from './components/site/Sections';
 import FaqSection from './components/FaqSection';
+import PhoneHome from './components/site/PhoneHome';
+import { IO_SCRIPT } from './components/site/labs';
 import ServicePage, { servicePath } from './components/site/ServicePage';
 import AboutPage, { ABOUT_PATH } from './components/site/AboutPage';
 import { JournalIndex, ArticlePage } from './components/site/JournalPages';
 import AiCheckPage, { AI_CHECK_PATH, AI_CHECK_FAQS } from './components/site/AiCheckPage';
 import { ARTICLES, AUTHOR, JOURNAL_PATH, articlePath } from './data/journal';
+import { WorkIndex, WorkCase } from './components/site/WorkPages';
+import { PROJECTS, WORK_PATH, workPath } from './data/work';
 import { FAQS } from './data/faqs';
 import { SERVICES_DATA } from './data/services';
 import { SERVICE_PAGES } from './data/servicePages';
@@ -18,7 +22,12 @@ const noop = () => {};
 
 function StaticHome() {
   return (
-    <div className="relative text-white antialiased">
+    <>
+    <div className="md:hidden">
+      <script dangerouslySetInnerHTML={{ __html: IO_SCRIPT }} />
+      <PhoneHome />
+    </div>
+    <div className="relative text-white antialiased max-md:hidden">
       <SiteNav chapter={0} onBook={noop} />
       <main>
         <Welcome onBook={noop} />
@@ -31,6 +40,7 @@ function StaticHome() {
         <Contact onBook={noop} />
       </main>
     </div>
+    </>
   );
 }
 
@@ -212,7 +222,70 @@ const AI_CHECK_ROUTE = {
   ],
 };
 
+const WORK_URL = `${SITE}${WORK_PATH}`;
+const workCrumbs = (extra) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+    { '@type': 'ListItem', position: 2, name: 'Work', item: WORK_URL },
+    ...extra,
+  ],
+});
+
+const WORK_ROUTES = [
+  {
+    id: 'work',
+    path: WORK_PATH,
+    url: WORK_URL,
+    title: 'Work — Websites and AI Systems Built by Nebulyx',
+    description: 'Websites Nebulyx designed and built for DataBahn, Vibe3D and Ecavo, plus AI automation systems for e-commerce, fraud detection and YouTube publishing.',
+    ogImage: `${SITE}/og/work.jpg`,
+    render: () => renderToString(<WorkIndex />),
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: 'Nebulyx work',
+        url: WORK_URL,
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: PROJECTS.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}${workPath(p.slug)}`, name: p.title })),
+        },
+      },
+      workCrumbs([]),
+    ],
+  },
+  ...PROJECTS.map((p) => {
+    const url = `${SITE}${workPath(p.slug)}`;
+    return {
+      id: `work-${p.slug}`,
+      path: workPath(p.slug),
+      url,
+      title: p.seoTitle,
+      description: p.description,
+      ogImage: `${SITE}/og/work-${p.slug}.jpg`,
+      render: () => renderToString(<WorkCase slug={p.slug} />),
+      schemas: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'CreativeWork',
+          name: p.title,
+          description: p.description,
+          url,
+          image: `${SITE}${p.image.src}`,
+          genre: p.industry,
+          creator: { '@type': 'Organization', name: 'Nebulyx', url: `${SITE}/` },
+          ...(p.kind === 'website' ? { about: { '@type': 'Organization', name: p.client, url: p.link.href } } : {}),
+        },
+        workCrumbs([{ '@type': 'ListItem', position: 3, name: p.title, item: url }]),
+      ],
+    };
+  }),
+];
+
 export const EXTRA_ROUTES = [
+  ...WORK_ROUTES,
   AI_CHECK_ROUTE,
   ...JOURNAL_ROUTES,
   {

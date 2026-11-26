@@ -45,7 +45,7 @@ const FOUNDERS = [
     role: 'Co-founder',
     bio: 'Owns growth and delivery. Hari turns launches into audiences with content, ads and marketing, and runs every project from the first call to the handover, so nothing slips.',
     leads: ['Growth & marketing', 'Client success & ops'],
-    link: { href: '/?book=', label: 'Book a scoping call →' },
+    link: { href: '/?book=', label: 'Request a scoping call →' },
   },
 ];
 
@@ -81,10 +81,11 @@ export default function AboutPage() {
           <nav aria-label="Main" className="hidden md:flex items-center gap-8 text-[14px]">
             <a href="/#services" className={navLink}>Services</a>
             <a href="/#process" className={navLink}>How it works</a>
+            <a href="/work/" className={navLink}>Work</a>
             <a href="/journal/" className={navLink}>Journal</a>
             <a href={ABOUT_PATH} aria-current="page" className={navLink}>About</a>
           </nav>
-          <a href="/?book=" className="sp-btn sp-btn-light h-10 px-5 text-[14px]">Book a call</a>
+          <a href="/?book=" className="sp-btn sp-btn-light h-10 px-5 text-[14px]">Request a call</a>
         </div>
       </header>
 
@@ -111,7 +112,7 @@ export default function AboutPage() {
           <p className={`${kicker} text-center`}>Why we exist</p>
           <div className="mt-6"><Statement text="Five vendors means five handovers. One team means one plan." /></div>
           <p className="mt-10 mx-auto max-w-2xl text-center text-[17px] leading-relaxed" data-io>
-            Most founders hire a designer, a developer, an automation freelancer, a social agency and an SEO consultant, then spend their week keeping them in sync. We put those skills in one senior team that plans the launch together and ships it in a fixed-length sprint.
+            Most founders hire a designer, a developer, an automation freelancer, a social agency and an SEO consultant, then spend their week keeping them in sync. We put those skills in one senior team that plans the launch together and ships it for a fixed price agreed in writing.
           </p>
         </section>
 
@@ -230,7 +231,7 @@ export default function AboutPage() {
             <h2 className={h2}>Tell us what you want to build</h2>
             <p className="mt-5 mx-auto max-w-xl text-[17px] leading-relaxed">You get a written scope, timeline and price after a short call. No commitment until you approve them.</p>
             <div className="mt-9 flex flex-wrap justify-center items-center gap-x-6 gap-y-4">
-              <a href="/?book=" className="sp-btn h-12 px-6 text-[15px]">Book a scoping call</a>
+              <a href="/?book=" className="sp-btn h-12 px-6 text-[15px]">Request a scoping call</a>
               <span className={`text-[15px] ${muted}`}>or email <a href={`mailto:${CONTACT.email}`} className={link}>{CONTACT.email}</a></span>
             </div>
           </div>
@@ -241,6 +242,7 @@ export default function AboutPage() {
         <span>© 2026 Nebulyx · {CONTACT.location}</span>
         <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className={footLink}>Instagram</a>
         <a href="/ai-visibility-check/" className={footLink}>Free AI check</a>
+        <a href="/work/" className={footLink}>Work</a>
         <a href="/journal/" className={footLink}>Journal</a>
         <a href="/privacy.html" className={footLink}>Privacy</a>
         <a href="/terms.html" className={footLink}>Terms</a>

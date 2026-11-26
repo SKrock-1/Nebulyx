@@ -31,10 +31,11 @@ export function Shell({ current, crumbs, title, lead, children }) {
           <a href="/" aria-label="Nebulyx home" className="focus-ring"><NebulyxLogo /></a>
           <nav aria-label="Main" className="hidden md:flex items-center gap-8 text-[14px]">
             <a href="/#services" className={navLink}>Services</a>
+            <a href="/work/" aria-current={current === 'work' ? 'page' : undefined} className={navLink}>Work</a>
             <a href={JOURNAL_PATH} aria-current={current === 'journal' ? 'page' : undefined} className={navLink}>Journal</a>
             <a href="/about/" className={navLink}>About</a>
           </nav>
-          <a href="/?book=" className="sp-btn sp-btn-light h-10 px-5 text-[14px]">Book a call</a>
+          <a href="/?book=" className="sp-btn sp-btn-light h-10 px-5 text-[14px]">Request a call</a>
         </div>
       </header>
 
@@ -63,6 +64,7 @@ export function Shell({ current, crumbs, title, lead, children }) {
         <span>© 2026 Nebulyx · {CONTACT.location}</span>
         <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className={footLink}>Instagram</a>
         <a href="/ai-visibility-check/" className={footLink}>Free AI check</a>
+        <a href="/work/" className={footLink}>Work</a>
         <a href={JOURNAL_PATH} className={footLink}>Journal</a>
         <a href="/about/" className={footLink}>About</a>
         <a href="/privacy.html" className={footLink}>Privacy</a>
@@ -170,7 +172,7 @@ export function ArticlePage({ slug }) {
             <p className={`font-display text-[22px] leading-tight ${ink}`}>Want this done for your launch?</p>
             <p className="mt-2 text-[15px] leading-relaxed">You get a written scope, timeline and price after a short call. No commitment until you approve them.</p>
             <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
-              <a href={`/?book=${encodeURIComponent(service.title)}`} className="sp-btn h-11 px-5 text-[14px]">Book a scoping call</a>
+              <a href={`/?book=${encodeURIComponent(service.title)}`} className="sp-btn h-11 px-5 text-[14px]">Request a scoping call</a>
               <a href={`mailto:${CONTACT.email}`} className={`text-[14px] ${link}`}>{CONTACT.email}</a>
             </div>
           </div>

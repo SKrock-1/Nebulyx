@@ -1,7 +1,7 @@
 export const FAQS = [
   {
-    q: "How much does a sprint cost?",
-    a: "It depends on what you need built, so we don't publish fixed prices. After the scoping call you get a written scope and a price for it. There's no commitment until you approve both."
+    q: "How much does a project cost?",
+    a: "It depends on what you need, so we price each project to its scope instead of using a rate card. After a short scoping call you get one fixed price in a written scope, and there's no commitment until you approve it. We reply to every request within 24 hours."
   },
   {
     q: "What happens on the scoping call?",
@@ -16,7 +16,7 @@ export const FAQS = [
     a: "You do. The code, accounts and content are set up in your name, so you can keep using them, change them or take them to another team."
   },
   {
-    q: "What if the sprint takes longer than planned?",
+    q: "What if the project takes longer than planned?",
     a: "We show you progress every week, so problems surface early. If something changes, we tell you straight away and agree a plan with you before going further."
   },
   {

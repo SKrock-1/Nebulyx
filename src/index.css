@@ -146,7 +146,7 @@ html[data-quality="low"] .service-num { animation-name: serviceLite; }
   --sp-card: #ffffff;
   --sp-ink: #1c1a17;
   --sp-body: #4b463f;
-  --sp-muted: #7b756b;
+  --sp-muted: #6f695f;
   --sp-line: rgba(40, 33, 22, 0.1);
   --sp-line-strong: rgba(40, 33, 22, 0.18);
   --sp-accent: #3a5bff;
@@ -254,6 +254,8 @@ a.sp-card:hover { transform: translateY(-3px); border-color: var(--sp-line-stron
 
 .sp-btn-light { background: #ffffff; color: #0b0d14; box-shadow: 0 6px 20px -8px rgba(255, 255, 255, 0.4); }
 .sp-btn-light:hover { background: #eef0ff; }
+.sp-btn-ghost { background: rgba(255, 255, 255, 0.08); color: #ffffff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24); }
+.sp-btn-ghost:hover { background: rgba(255, 255, 255, 0.14); }
 .sp-btn { transition: transform 0.5s var(--ease-spring), box-shadow 0.3s ease, background-color 0.3s ease; }
 .sp-btn:hover { transform: scale(1.04); }
 .sp-btn:active { transform: scale(0.97); }
@@ -746,3 +748,111 @@ html[data-quality="low"] .wm-char { animation: none; background-image: none; }
   .service-visual .sv-svg *, .sp-stage .service-visual, .sp-statement span, .drift-x, .drift-y, .drift-r, .sp-pop, .sp-step-icon *, .founder-aurora, .founder-badge::after { animation: none; }
   .sp-btn, .sp-card { transition: none; }
 }
+
+/* ---- Phone: keep subpage scrolling cheap ---- */
+@media (max-width: 767px) {
+  .sp-header[data-surface="dark"] { background: #05060a; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .sp-header[data-surface="light"] { background: var(--sp-bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .drift-x, .drift-y, .drift-r { animation: none; }
+  .sp-statement span { animation: none; color: var(--sp-ink); }
+  .sp-stage .service-visual { box-shadow: 0 24px 48px -28px rgba(10, 14, 40, 0.4); }
+}
+
+.js-play .service-visual:not(.is-playing) *,
+.js-play .sp-step-icon:not(.is-playing) *,
+.js-play .founder-aurora:not(.is-playing) { animation-play-state: paused; }
+
+/* ---- Phone homepage (Labs style) ---- */
+.phone-service-row { transition: background-color 0.2s ease; }
+.phone-service-row:active { background: var(--sp-surface); }
+.phone-home h1, .phone-home h2, .phone-home h3 { text-wrap: balance; }
+.phone-home p { text-wrap: pretty; }
+
+.phone-home .faq-item summary { padding-right: 44px; position: relative; }
+.phone-home .faq-item summary::after {
+  position: absolute; right: 4px; top: 50%; translate: 0 -50%; float: none;
+  display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--sp-tint); color: var(--sp-accent-ink); font-size: 18px; line-height: 1;
+}
+
+.phone-cta {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  padding: 12px 20px max(12px, env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--sp-bg) 92%, transparent);
+  border-top: 1px solid var(--sp-line);
+  transform: translateY(110%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.phone-cta[data-show="true"] { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .phone-cta { transition: none; }
+}
+
+/* ---- Work pages ---- */
+.work-frame { margin: 0; overflow: hidden; border-radius: 16px; background: var(--sp-card); border: 1px solid var(--sp-line); box-shadow: var(--sp-shadow); }
+.work-frame-bar { display: flex; gap: 6px; padding: 10px 12px; background: var(--sp-surface); border-bottom: 1px solid var(--sp-line); }
+.work-frame-bar span { width: 9px; height: 9px; border-radius: 50%; background: var(--sp-line-strong); }
+.work-phone { border-radius: 30px; border: 6px solid #1c1a17; box-shadow: var(--sp-shadow); }
+
+/* ---- Homepage work fly-through: one variable per panel drives the reveal ---- */
+.work-panel { backface-visibility: hidden; }
+.work-reveal { opacity: var(--r, 1); }
+.work-reveal-rise { transform: translate3d(0, calc((1 - var(--r, 1)) * 16px), 0); }
+.work-drift-num { transform: translate3d(calc(var(--drift, 0) * 220px), 0, 0); }
+.work-drift-img { transform: translate3d(calc(var(--drift, 0) * -70px), 0, 0); }
+.work-intro { transform-origin: 30% 50%; }
+
+.work-frame--crop img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+.sample-card img, .work-frame img { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+a.sp-card:hover .work-frame img { transform: scale(1.025); }
+
+/* Page-to-page: the project shot morphs into the case page; the header holds still */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  .sp-header { view-transition-name: site-header; }
+  ::view-transition-group(*) { animation-duration: 0.5s; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+  ::view-transition-old(root) { animation: vtOut 0.25s ease both; }
+  ::view-transition-new(root) { animation: vtIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+}
+@keyframes vtOut { to { opacity: 0; } }
+@keyframes vtIn { from { opacity: 0; transform: translateY(12px); } }
+
+/* ---- Phone hero: proof-led showcase ---- */
+.phone-hero-ship { color: #8fa2ff; }
+.phone-showcase-track {
+  display: flex; gap: 12px; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-inline: 20px; padding: 4px 20px 8px;
+  scrollbar-width: none;
+}
+.phone-showcase-track::-webkit-scrollbar { display: none; }
+.phone-showcase-item { flex: 0 0 80%; scroll-snap-align: center; }
+.phone-showcase-card {
+  display: block; overflow: hidden; border-radius: 22px;
+  background: #0d1120; border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
+}
+.phone-showcase-card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+.phone-showcase-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 14px 16px 16px; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .phone-showcase-item { animation: showcaseFocus linear both; animation-timeline: view(inline); }
+  }
+}
+@keyframes showcaseFocus {
+  0% { transform: scale(0.9); opacity: 0.55; }
+  50% { transform: none; opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.55; }
+}
+
+/* ---- Phone price builder ---- */
+.price-chip {
+  min-height: 44px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 500;
+  border: 1px solid var(--sp-line-strong); background: #ffffff; color: var(--sp-body);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.price-chip.is-on { background: var(--sp-accent); border-color: var(--sp-accent); color: #ffffff; }
+.price-chip:active { transform: scale(0.97); }
+.price-progress { position: relative; width: 96px; height: 4px; border-radius: 999px; background: var(--sp-line); overflow: hidden; }
+.price-progress span { position: absolute; inset: 0; background: var(--sp-accent); transform-origin: left; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.price-result { padding: 18px; border-radius: 18px; background: var(--sp-surface); border: 1px dashed var(--sp-line-strong); transition: background-color 0.3s ease, border-color 0.3s ease; }
+.price-result.is-ready { background: var(--sp-tint); border-style: solid; border-color: transparent; }

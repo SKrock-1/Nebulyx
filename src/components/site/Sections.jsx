@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
 import Split from './Split';
 import { ArrowRight, ArrowDown } from 'lucide-react';
 import { SERVICES_DATA } from '../../data/services';
@@ -7,7 +8,8 @@ import { SERVICE_PAGES } from '../../data/servicePages';
 import { servicePath } from './ServicePage';
 import { scrollToId } from '../../world/useWorldScroll';
 import { worldState } from '../../world/store';
-import { LOW_POWER } from '../../world/quality';
+import { WEBSITES, AUTOMATIONS, WORK_PATH, workPath } from '../../data/work';
+
 
 function useStickyProgress(ref) {
   const [p, setP] = useState(0);
@@ -52,11 +54,11 @@ export function Welcome({ onBook }) {
         </h1>
         <div data-reveal className="lg:max-w-sm shrink-0">
           <p className="text-[17px] leading-relaxed text-[#b6bccb]">
-            Website, AI automations, social growth, AI search and your online store, designed and built by senior engineers in a fixed-length sprint. You own all of it.
+            Website, AI automations, social growth, AI search and your online store, designed and built by senior engineers for a fixed price agreed before work starts. You own all of it.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <button type="button" onClick={onBook} className="btn-primary h-12 px-5 text-sm">
-              Book a scoping call <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              Request a scoping call <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </button>
             <button type="button" onClick={() => scrollToId('services')} className="btn-ghost h-12 px-5 text-sm">
               See what we build <ArrowDown className="w-4 h-4" aria-hidden="true" />
@@ -160,10 +162,10 @@ export function Services({ onBookService }) {
               </ul>
               <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <button type="button" onClick={() => onBookService(s.title)} className="btn-ghost h-11 px-4 text-sm">
-                  Book a call about {s.shortTitle.toLowerCase()} <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  Request a call about {lower(s.shortTitle)} <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </button>
                 <a href={servicePath(SERVICE_PAGES[s.id].slug)} className="focus-ring text-[14px] text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">
-                  More about {s.shortTitle.toLowerCase()}
+                  More about {lower(s.shortTitle)}
                 </a>
               </div>
             </div>
@@ -174,7 +176,7 @@ export function Services({ onBookService }) {
   );
 }
 
-const STEPS = [
+export const STEPS = [
   { key: 'Scope', line: 'Agreed in writing.', text: 'A short call, then a written scope, timeline and price you approve before anything starts.' },
   { key: 'Build', line: 'Progress every week.', text: 'We build in short cycles and show you working software every week.' },
   { key: 'Test', line: 'On real devices.', text: 'Tested on the phones and browsers your customers use, then launched with you.' },
@@ -193,7 +195,7 @@ export function Process() {
         <div className="mx-auto max-w-4xl px-5 text-center">
           <Split lines={['From first call', 'to handover.']} className="font-display font-medium text-white text-[clamp(2.4rem,5.6vw,5.6rem)] leading-[0.98] tracking-[-0.02em]" />
           <p className="mt-6 mx-auto max-w-lg text-[17px] leading-relaxed text-[#b6bccb]">
-            One fixed-length sprint, four steps, no surprises at the end.
+            One fixed price, four steps, no surprises at the end.
           </p>
         </div>
         <div className="w-full mx-auto max-w-[1600px] px-5 sm:px-8">
@@ -221,77 +223,18 @@ export function Process() {
   );
 }
 
-const SAMPLES = [
-  {
-    title: 'A launch site with a waitlist',
-    tags: 'Websites · Automations',
-    text: 'Design, build and launch, with an email waitlist that tags every sign-up and sends a welcome sequence.',
-    steps: ['Sign-up', 'Tagged', 'Welcome email'],
-  },
-  {
-    title: 'A support inbox on autopilot',
-    tags: 'AI automations',
-    text: 'An AI agent answers routine questions from your docs and hands anything unusual to a person.',
-    steps: ['Question', 'AI agent', 'Answered'],
-    branch: 'To a person',
-  },
-  {
-    title: 'A store ready for its first ad',
-    tags: 'Online stores · Social growth',
-    text: 'Storefront, suppliers and order handling set up, plus a starter set of short videos to advertise it.',
-    steps: ['Ad', 'Storefront', 'Supplier ships'],
-  },
-];
-
-const FlowDiagram = React.memo(function FlowDiagram({ steps, branch }) {
-  const w = 104;
-  const gap = 24;
-  return (
-    <svg viewBox="0 0 360 150" className="w-full h-auto" role="img" aria-label={`${steps.join(' then ')}${branch ? `, or ${branch.toLowerCase()}` : ''}`}>
-      {steps.map((label, i) => {
-        const x = 4 + i * (w + gap);
-        return (
-          <g key={label}>
-            <rect x={x} y="46" width={w} height="40" fill={i === steps.length - 1 ? '#3a5bff' : '#ffffff'} stroke="#3a5bff" strokeWidth="1.5" />
-            <text x={x + w / 2} y="71" textAnchor="middle" fontSize="13" fill={i === steps.length - 1 ? '#ffffff' : '#11131a'} fontFamily="General Sans, sans-serif">{label}</text>
-            {i < steps.length - 1 && (
-              <path d={`M${x + w + 3} 66 h${gap - 8} m-5 -4 l5 4 l-5 4`} fill="none" stroke="#3a5bff" strokeWidth="1.5" />
-            )}
-          </g>
-        );
-      })}
-      {branch && (
-        <g>
-          <path d="M184 86 v24 h80" fill="none" stroke="#3a5bff" strokeWidth="1.5" strokeDasharray="4 4" />
-          <rect x="236" y="104" width="120" height="34" fill="#ffffff" stroke="#11131a" strokeWidth="1.25" />
-          <text x="296" y="126" textAnchor="middle" fontSize="13" fill="#11131a" fontFamily="General Sans, sans-serif">{branch}</text>
-        </g>
-      )}
-    </svg>
-  );
-});
-
-function useNarrow() {
-  const [narrow, setNarrow] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches);
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)');
-    const on = () => setNarrow(mq.matches);
-    mq.addEventListener('change', on);
-    return () => mq.removeEventListener('change', on);
-  }, []);
-  return narrow;
-}
-
+const lower = (t) => (t.startsWith('AI') ? t : t.toLowerCase());
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
 const easeOut = (t) => 1 - Math.pow(1 - t, 3);
 const easeIn = (t) => t * t * t;
-const PANEL_START = 0.1;
-const PANEL_STEP = 0.27;
-const PANEL_SPAN = 0.42;
+const PANEL_START = 0.07;
+const PANEL_SPAN = 0.3;
+const PANEL_END = 0.97;
 
-function panelFlight(i, p, vw, narrow) {
-  const s = (p - PANEL_START - i * PANEL_STEP) / PANEL_SPAN;
-  if (s <= 0 || s >= 1) return { s, style: { visibility: 'hidden' } };
+function flight(i, count, p, vw, narrow) {
+  const step = (PANEL_END - PANEL_START - PANEL_SPAN) / Math.max(1, count - 1);
+  const s = (p - PANEL_START - i * step) / PANEL_SPAN;
+  if (s <= 0 || s >= 1) return null;
   const a = easeOut(clamp01(s / 0.34));
   const q = easeIn(clamp01((s - 0.72) / 0.28));
   const side = i % 2 === 0 ? 1 : -1;
@@ -301,82 +244,159 @@ function panelFlight(i, p, vw, narrow) {
   const z = -2600 * (1 - a) + 650 * q;
   const ry = -side * (46 * (1 - a) + 30 * q);
   const rx = 8 * (1 - a);
-  const opacity = Math.min(1, clamp01(s / 0.34) * 2.5) * (1 - clamp01((q - 0.12) / 0.55));
   return {
     s,
-    style: {
-      opacity,
-      zIndex: Math.round(3000 + z),
-      transform: `translate(-50%, -50%) translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg)`,
-    },
+    opacity: Math.min(1, clamp01(s / 0.34) * 2.5) * (1 - clamp01((q - 0.12) / 0.55)),
+    transform: `translate(-50%, -50%) translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg)`,
+    reveal: easeOut(clamp01((s - 0.24) / 0.2)),
+    drift: s - 0.55,
   };
 }
 
-function useViewportWidth() {
-  const [w, setW] = useState(() => (typeof window === 'undefined' ? 1440 : window.innerWidth));
+function useWorkFlight(sectionRef, introRef, panelRefs, counterRef, barRef, labelRef, enabled) {
   useEffect(() => {
-    const on = () => setW(window.innerWidth);
-    window.addEventListener('resize', on);
-    return () => window.removeEventListener('resize', on);
-  }, []);
-  return w;
+    const section = sectionRef.current;
+    if (!enabled || !section) return undefined;
+    const panels = panelRefs.current;
+    const count = WORK_PROJECTS.length;
+    let top = 0;
+    let range = 1;
+    let vw = window.innerWidth;
+    let narrow = vw < 768;
+    let lastY = -1;
+    let active = -1;
+    const shown = panels.map(() => false);
+
+    const measure = () => {
+      top = section.offsetTop;
+      range = Math.max(1, section.offsetHeight - window.innerHeight);
+      vw = window.innerWidth;
+      narrow = vw < 768;
+      lastY = -1;
+    };
+
+    const tick = () => {
+      const y = window.scrollY;
+      if (y === lastY) return;
+      lastY = y;
+      const p = clamp01((y - top) / range);
+
+      const h = easeIn(clamp01(p / PANEL_START));
+      const intro = introRef.current;
+      if (intro) {
+        intro.style.opacity = (1 - h).toFixed(3);
+        intro.style.transform = `scale(${(1 + h * 1.6).toFixed(3)})`;
+      }
+
+      let current = 0;
+      for (let i = 0; i < count; i += 1) {
+        const el = panels[i];
+        if (!el) continue;
+        const f = flight(i, count, p, vw, narrow);
+        if (!f) {
+          if (shown[i]) {
+            el.style.visibility = 'hidden';
+            el.style.willChange = '';
+            shown[i] = false;
+          }
+          continue;
+        }
+        if (!shown[i]) {
+          el.style.visibility = 'visible';
+          el.style.willChange = 'transform, opacity';
+          shown[i] = true;
+        }
+        if (f.s > 0.2) current = i;
+        el.style.opacity = f.opacity.toFixed(3);
+        el.style.transform = f.transform;
+        el.style.setProperty('--r', f.reveal.toFixed(3));
+        el.style.setProperty('--drift', f.drift.toFixed(3));
+      }
+
+      const bar = barRef.current;
+      if (bar) {
+        bar.style.transform = `scaleX(${clamp01((p - PANEL_START) / (PANEL_END - PANEL_START)).toFixed(4)})`;
+        bar.closest('.work-progress').style.opacity = (clamp01((p - PANEL_START) * 12) * (1 - clamp01((p - 0.95) * 20))).toFixed(3);
+      }
+      if (current !== active) {
+        active = current;
+        if (counterRef.current) counterRef.current.textContent = `${String(active + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
+        if (labelRef.current) labelRef.current.textContent = WORK_PROJECTS[active].industry;
+      }
+    };
+
+    const warm = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      section.querySelectorAll('img').forEach((img) => {
+        img.loading = 'eager';
+        img.decode?.().catch(() => {});
+      });
+      warm.disconnect();
+    }, { rootMargin: '150% 0px' });
+    warm.observe(section);
+
+    const ro = new ResizeObserver(() => { measure(); tick(); });
+    ro.observe(document.body);
+    window.addEventListener('resize', measure);
+    measure();
+    tick();
+    gsap.ticker.add(tick);
+    return () => {
+      gsap.ticker.remove(tick);
+      window.removeEventListener('resize', measure);
+      ro.disconnect();
+      warm.disconnect();
+    };
+  }, [sectionRef, introRef, panelRefs, counterRef, barRef, labelRef, enabled]);
 }
 
+const WORK_PROJECTS = [...WEBSITES, ...AUTOMATIONS];
+
 export function Work() {
-  const ref = useRef(null);
-  const p = useStickyProgress(ref);
-  const narrow = useNarrow();
-  const vw = useViewportWidth();
+  const sectionRef = useRef(null);
+  const introRef = useRef(null);
+  const panelRefs = useRef([]);
+  const counterRef = useRef(null);
+  const barRef = useRef(null);
+  const labelRef = useRef(null);
   const reduced = worldState.reduced;
-  const h = reduced ? 0 : easeIn(clamp01(p / PANEL_START));
-  const flights = SAMPLES.map((_, i) => panelFlight(i, p, vw, narrow));
-  let active = 0;
-  flights.forEach((f, i) => { if (f.s > 0.2 && f.s < 1) active = i; });
+  useWorkFlight(sectionRef, introRef, panelRefs, counterRef, barRef, labelRef, !reduced);
+  const total = String(WORK_PROJECTS.length).padStart(2, '0');
 
   return (
-    <section id="work" data-kf="work" ref={ref} className={`relative work-room ${reduced ? '' : 'min-h-[400vh]'}`}>
+    <section id="work" data-kf="work" ref={sectionRef} className={`relative work-room ${reduced ? '' : 'min-h-[680vh]'}`}>
       <span data-kf="work-fly" aria-hidden="true" className="absolute left-0 h-px w-px pointer-events-none" style={{ top: '52%' }} />
       <div data-depth className={`${reduced ? 'py-28' : 'sticky top-0 h-[100svh] overflow-hidden'} flex flex-col justify-center`}>
-        <div
-          className="w-full mx-auto max-w-[1600px] px-5 sm:px-8"
-          style={reduced ? undefined : {
-            opacity: 1 - h,
-            transform: `scale(${(1 + h * 1.6).toFixed(3)})`,
-            filter: !LOW_POWER && h > 0.01 ? `blur(${(h * 12).toFixed(1)}px)` : undefined,
-            transformOrigin: '30% 50%',
-          }}
-        >
-          <Split lines={['What a sprint', 'looks like.']} className="font-display font-medium text-[#0b0d12] text-[clamp(2.6rem,7vw,7.4rem)] leading-[0.95] tracking-[-0.02em]" />
+        <div ref={introRef} className="work-intro w-full mx-auto max-w-[1600px] px-5 sm:px-8">
+          <Split lines={['Selected', 'work.']} className="font-display font-medium text-[#0b0d12] text-[clamp(2.6rem,7vw,7.4rem)] leading-[0.95] tracking-[-0.02em]" />
           <p className="mt-6 max-w-lg text-[17px] leading-relaxed text-[#454b5a]">
-            Illustrative examples of what one sprint can deliver. Every real project is scoped with the founder first.
+            Websites for DataBahn, Vibe3D and Ecavo, and AI systems built for clients in e-commerce, fintech and media. Every case study is on the <a href={WORK_PATH} className="focus-ring underline decoration-[#0b0d12]/25 underline-offset-4 hover:decoration-[#0b0d12]">work page</a>.
           </p>
-          {!reduced && <p className="mt-10 font-mono text-[11px] tracking-[0.16em] uppercase text-[#7f8799]">Scroll to fly through three samples</p>}
+          {!reduced && <p className="mt-10 font-mono text-[11px] tracking-[0.16em] uppercase text-[#7f8799]">Scroll to fly through all {WORK_PROJECTS.length} projects</p>}
         </div>
 
         {reduced ? (
           <div className="w-full mx-auto max-w-[1600px] px-5 sm:px-8 mt-12 grid gap-6">
-            {SAMPLES.map((s, i) => <SamplePanel key={s.title} sample={s} index={i} reveal={1} drift={0} />)}
+            {WORK_PROJECTS.map((s, i) => <SamplePanel key={s.slug} project={s} index={i} total={total} />)}
           </div>
         ) : (
           <div className="absolute inset-0 [perspective:1100px] [transform-style:preserve-3d]">
-            {SAMPLES.map((s, i) => {
-              const f = flights[i];
-              const reveal = easeOut(clamp01((f.s - 0.24) / 0.2));
-              return (
-                <div key={s.title} className="absolute left-1/2 top-1/2 w-[min(88vw,1040px)] will-change-transform" style={f.style}>
-                  <SamplePanel sample={s} index={i} reveal={reveal} drift={f.s - 0.55} />
-                </div>
-              );
-            })}
-            <div
-              className="absolute left-1/2 -translate-x-1/2 w-[min(88vw,520px)] bottom-20 sm:bottom-8 flex items-center justify-center gap-4 font-mono text-[11px] tracking-[0.16em] uppercase text-[#454b5a]"
-              style={{ opacity: clamp01((p - PANEL_START) * 12) * (1 - clamp01((p - 0.9) * 10)) }}
-            >
-              <span className="tabular-nums">{String(active + 1).padStart(2, '0')} / {String(SAMPLES.length).padStart(2, '0')}</span>
-              <span className="relative flex-1 max-w-[240px] h-px bg-[#0b0d12]/15">
-                <span className="absolute inset-y-0 left-0 bg-[#3a5bff]" style={{ width: `${(clamp01((p - PANEL_START) / (1 - PANEL_START - 0.06)) * 100).toFixed(1)}%` }} />
+            {WORK_PROJECTS.map((s, i) => (
+              <div
+                key={s.slug}
+                ref={(el) => { panelRefs.current[i] = el; }}
+                className="work-panel absolute left-1/2 top-1/2 w-[min(88vw,1040px)]"
+                style={{ zIndex: WORK_PROJECTS.length - i, visibility: 'hidden' }}
+              >
+                <SamplePanel project={s} index={i} total={total} />
+              </div>
+            ))}
+            <div className="work-progress absolute left-1/2 -translate-x-1/2 w-[min(88vw,560px)] bottom-20 sm:bottom-8 flex items-center justify-center gap-4 font-mono text-[11px] tracking-[0.16em] uppercase text-[#454b5a]" style={{ opacity: 0 }}>
+              <span ref={counterRef} className="tabular-nums">01 / {total}</span>
+              <span className="relative flex-1 max-w-[240px] h-px bg-[#0b0d12]/15 overflow-hidden">
+                <span ref={barRef} className="absolute inset-0 bg-[#3a5bff] origin-left" style={{ transform: 'scaleX(0)' }} />
               </span>
-              <span className="hidden sm:inline">{SAMPLES[active].tags}</span>
+              <span ref={labelRef} className="hidden sm:inline min-w-[14ch]">{WORK_PROJECTS[0].industry}</span>
             </div>
           </div>
         )}
@@ -385,38 +405,32 @@ export function Work() {
   );
 }
 
-function SamplePanel({ sample, index, reveal, drift }) {
+function SamplePanel({ project, index, total }) {
   const n = String(index + 1).padStart(2, '0');
+  const kind = project.kind === 'website' ? 'Website' : 'AI system';
   return (
     <article className="sample-card relative overflow-hidden bg-white text-[#0b0d12] p-6 sm:p-10 grid md:grid-cols-[1.05fr_1fr] gap-6 md:gap-10 items-center">
-      <span
-        aria-hidden="true"
-        className="absolute -right-4 -bottom-10 font-display font-medium leading-none tracking-[-0.06em] text-[clamp(8rem,22vw,20rem)] text-[#0b0d12]/[0.05] select-none"
-        style={{ transform: `translateX(${(drift * 220).toFixed(1)}px)` }}
-      >
+      <span aria-hidden="true" className="work-drift-num absolute -right-4 -bottom-10 font-display font-medium leading-none tracking-[-0.06em] text-[clamp(8rem,22vw,20rem)] text-[#0b0d12]/[0.05] select-none">
         {n}
       </span>
       <div className="relative">
         <div className="flex items-center gap-3 font-mono text-[11px] tracking-[0.16em] uppercase text-[#7f8799]">
-          <span>{n} / 03</span>
-          <span className="px-2 py-1 bg-[#0b0d12] text-white">Sample</span>
+          <span>{n} / {total}</span>
+          <span className="px-2 py-1 bg-[#0b0d12] text-white">{kind}</span>
         </div>
-        <h3
-          className="mt-5 font-display text-[clamp(1.9rem,3.6vw,3.4rem)] leading-[1] tracking-[-0.035em]"
-          style={{ clipPath: `inset(0 ${((1 - reveal) * 100).toFixed(1)}% 0 0)` }}
-        >
-          {sample.title}
+        <h3 className="work-reveal mt-5 font-display text-[clamp(1.9rem,3.6vw,3.4rem)] leading-[1] tracking-[-0.035em]">
+          {project.name}
         </h3>
-        <p className="mt-3 text-[13px] text-[#3a5bff]" style={{ opacity: reveal }}>{sample.tags}</p>
-        <p
-          className="mt-3 max-w-md text-[15px] sm:text-[16px] leading-relaxed text-[#454b5a]"
-          style={{ opacity: reveal, transform: `translateY(${((1 - reveal) * 16).toFixed(1)}px)` }}
-        >
-          {sample.text}
+        <p className="work-reveal mt-3 text-[13px] text-[#3a5bff]">{project.industry}</p>
+        <p className="work-reveal work-reveal-rise mt-3 max-w-md text-[15px] sm:text-[16px] leading-relaxed text-[#454b5a]">
+          {project.title}. {project.services.slice(0, 2).join(' and ')}.
         </p>
+        <a href={workPath(project.slug)} className="work-reveal relative mt-6 inline-flex items-center gap-2 focus-ring text-[15px] font-medium text-[#3a5bff] underline decoration-[#3a5bff]/30 underline-offset-4 hover:decoration-[#3a5bff]">
+          Read the case study <ArrowRight className="w-4 h-4" aria-hidden="true" />
+        </a>
       </div>
-      <div className="relative bg-[#f1f3f8] p-4 sm:p-6" style={{ transform: `translateX(${(drift * -70).toFixed(1)}px)` }}>
-        <FlowDiagram steps={sample.steps} branch={sample.branch} />
+      <div className="work-drift-img relative">
+        <img src={project.image.src} width={project.image.width} height={project.image.height} alt={project.image.alt} loading="lazy" decoding="async" className="block w-full h-auto max-h-[46vh] object-cover object-top shadow-[0_24px_60px_-30px_rgba(11,13,18,0.5)]" />
       </div>
     </article>
   );
@@ -468,7 +482,7 @@ export function Contact({ onBook }) {
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
           <button type="button" onClick={onBook} className="stagger-item btn-primary h-12 px-5 text-sm" style={{ '--i': 3 }}>
-            Book a scoping call <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            Request a scoping call <ArrowRight className="w-4 h-4" aria-hidden="true" />
           </button>
           <span className="text-[15px] text-[#9aa1b2]">
             or email <a href={`mailto:${CONTACT.email}`} className="focus-ring text-white underline decoration-white/30 underline-offset-4 hover:decoration-white transition-colors">{CONTACT.email}</a>
@@ -478,6 +492,7 @@ export function Contact({ onBook }) {
           <span>© {new Date().getFullYear()} Nebulyx · {CONTACT.location}</span>
           <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className="focus-ring hover:text-white transition-colors">Instagram</a>
           <a href="/ai-visibility-check/" className="focus-ring hover:text-white transition-colors">Free AI check</a>
+          <a href="/work/" className="focus-ring hover:text-white transition-colors">Work</a>
           <a href="/journal/" className="focus-ring hover:text-white transition-colors">Journal</a>
           <a href="/about/" className="focus-ring hover:text-white transition-colors">About</a>
           <a href="/privacy.html" className="focus-ring hover:text-white transition-colors">Privacy</a>

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { gsap } from 'gsap';
 import { worldState } from './store';
-import { LOW_POWER } from './quality';
+import { LOW_POWER, PHONE } from './quality';
 
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const IDLE_CHECK = 30;
@@ -21,7 +21,7 @@ function look(d) {
 
 export function useDepthFlight() {
   useEffect(() => {
-    if (worldState.reduced) return undefined;
+    if (worldState.reduced || PHONE) return undefined;
     const items = [...document.querySelectorAll('[data-depth]')].map((el) => ({ el, ty: 0, s: 1, key: '' }));
     items.forEach(({ el }) => {
       el.style.transformOrigin = '50% 50%';

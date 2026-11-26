@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CHAPTERS } from './formations';
 import { worldState } from './store';
+import { PHONE } from './quality';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +24,7 @@ export function useWorldScroll() {
 
     let lenis = null;
     let tick = null;
-    if (!reduced) {
+    if (!reduced && !PHONE) {
       lenis = new Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 1.1, touchMultiplier: 1.4 });
       worldState.lenis = lenis;
       if (import.meta.env.DEV) window.__lenis = lenis;

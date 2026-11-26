@@ -49,7 +49,7 @@ export default function SiteNav({ chapter, onBook }) {
 
         <div className="flex items-center gap-2">
           <button type="button" onClick={onBook} className="btn-primary h-11 md:h-10 px-4 text-[13px]">
-            Book a scoping call
+            Request a scoping call
           </button>
           <button
             type="button"

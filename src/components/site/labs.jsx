@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-export const IO_SCRIPT = "(function(){var d=document.documentElement;if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('js-io');function go(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -10% 0px'});document.querySelectorAll('[data-io]').forEach(function(el){io.observe(el);});var h=document.querySelector('[data-hero]'),hd=document.querySelector('[data-header]');if(h&&hd){new IntersectionObserver(function(es){hd.dataset.surface=es[0].isIntersecting?'dark':'light';},{rootMargin:'-64px 0px -100% 0px'}).observe(h);}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',go);}else{go();}})();";
+export const IO_SCRIPT = "(function(){var d=document.documentElement;if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('js-io');function go(){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -10% 0px'});document.querySelectorAll('[data-io]').forEach(function(el){io.observe(el);});var pv=new IntersectionObserver(function(es){es.forEach(function(e){e.target.classList.toggle('is-playing',e.isIntersecting);});});document.querySelectorAll('.service-visual,.sp-step-icon,.founder-aurora').forEach(function(el){pv.observe(el);});d.classList.add('js-play');var h=document.querySelector('[data-hero]'),hd=document.querySelector('[data-header]');if(h&&hd){new IntersectionObserver(function(es){hd.dataset.surface=es[0].isIntersecting?'dark':'light';},{rootMargin:'-64px 0px -100% 0px'}).observe(h);}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',go);}else{go();}})();";
 
 export function useIoReveal(enabled = true) {
   useEffect(() => {
@@ -21,6 +21,11 @@ export function useIoReveal(enabled = true) {
       });
     }, { rootMargin: '0px 0px -10% 0px' });
     els.forEach((el) => { if (!el.classList.contains('is-in')) io.observe(el); });
+    const play = new IntersectionObserver((entries) => {
+      entries.forEach((e) => e.target.classList.toggle('is-playing', e.isIntersecting));
+    });
+    document.querySelectorAll('.service-visual, .sp-step-icon, .founder-aurora').forEach((el) => play.observe(el));
+    root.classList.add('js-play');
     let surface = null;
     const hero = document.querySelector('[data-hero]');
     const header = document.querySelector('[data-header]');
@@ -32,6 +37,7 @@ export function useIoReveal(enabled = true) {
     }
     return () => {
       io.disconnect();
+      play.disconnect();
       surface?.disconnect();
       root.classList.remove('js-io');
     };
@@ -131,5 +137,23 @@ export function StepIcon({ step }) {
     <div className="sp-step-icon" aria-hidden="true">
       <svg viewBox="0 0 88 88">{icons[step.key]}</svg>
     </div>
+  );
+}
+
+export function Frame({ image, eager = false, sizes = '(min-width: 1024px) 1100px, 100vw', className = '', name }) {
+  return (
+    <figure className={`work-frame ${className}`} style={name ? { viewTransitionName: name } : undefined}>
+      <div className="work-frame-bar" aria-hidden="true"><span /><span /><span /></div>
+      <img
+        src={image.src}
+        width={image.width}
+        height={image.height}
+        alt={image.alt}
+        sizes={sizes}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        className="block w-full h-auto"
+      />
+    </figure>
   );
 }

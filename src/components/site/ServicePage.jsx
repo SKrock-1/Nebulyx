@@ -47,10 +47,11 @@ export default function ServicePage({ id, tone = 'warm' }) {
             <a href="/#services" className={navLink}>Services</a>
             <a href="/#process" className={navLink}>How it works</a>
             <a href="/#faq" className={navLink}>FAQ</a>
+            <a href="/work/" className={navLink}>Work</a>
             <a href="/journal/" className={navLink}>Journal</a>
             <a href="/about/" className={navLink}>About</a>
           </nav>
-          <a href={bookHref(service)} className="sp-btn sp-btn-light h-10 px-5 text-[14px]">Book a call</a>
+          <a href={bookHref(service)} className="sp-btn sp-btn-light h-10 px-5 text-[14px]">Request a call</a>
         </div>
       </header>
 
@@ -76,7 +77,7 @@ export default function ServicePage({ id, tone = 'warm' }) {
           <h1 className="relative mt-6 mx-auto max-w-4xl font-display font-medium text-white text-[clamp(2.5rem,6.4vw,5.2rem)] leading-[1] tracking-[-0.03em]">{page.h1}</h1>
           <p className="relative mt-6 mx-auto max-w-xl text-[19px] leading-relaxed text-white/75">{service.tagline}.</p>
           <div className="relative mt-9 flex flex-wrap justify-center items-center gap-x-6 gap-y-4">
-            <a href={bookHref(service)} className="sp-btn sp-btn-light h-12 px-6 text-[15px]">Book a scoping call</a>
+            <a href={bookHref(service)} className="sp-btn sp-btn-light h-12 px-6 text-[15px]">Request a scoping call</a>
             <a href={`mailto:${CONTACT.email}`} className="focus-ring text-[15px] text-white/70 underline decoration-white/30 underline-offset-4 hover:text-white">{CONTACT.email}</a>
           </div>
           <div className="sp-stage relative mt-16 sm:mt-20 mx-auto max-w-[560px]">
@@ -236,7 +237,7 @@ export default function ServicePage({ id, tone = 'warm' }) {
             <h2 className={h2}>Tell us what you want to build</h2>
             <p className="mt-5 mx-auto max-w-xl text-[17px] leading-relaxed">You get a written scope, timeline and price after a short call. No commitment until you approve them.</p>
             <div className="mt-9 flex flex-wrap justify-center items-center gap-x-6 gap-y-4">
-              <a href={bookHref(service)} className="sp-btn h-12 px-6 text-[15px]">Book a scoping call</a>
+              <a href={bookHref(service)} className="sp-btn h-12 px-6 text-[15px]">Request a scoping call</a>
               <span className={`text-[15px] ${muted}`}>or email <a href={`mailto:${CONTACT.email}`} className={link}>{CONTACT.email}</a></span>
             </div>
           </div>
@@ -248,6 +249,7 @@ export default function ServicePage({ id, tone = 'warm' }) {
         <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className={footLink}>Instagram {CONTACT.instagramHandle}</a>
         <a href={`mailto:${CONTACT.email}`} className={footLink}>{CONTACT.email}</a>
         <a href="/ai-visibility-check/" className={footLink}>Free AI check</a>
+        <a href="/work/" className={footLink}>Work</a>
         <a href="/journal/" className={footLink}>Journal</a>
         <a href="/about/" className={footLink}>About</a>
         <a href="/privacy.html" className={footLink}>Privacy</a>

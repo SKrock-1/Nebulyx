@@ -11,5 +11,9 @@ function detectLowPower() {
 }
 
 export const LOW_POWER = typeof window !== 'undefined' && detectLowPower();
+export const PHONE = typeof window !== 'undefined' && window.matchMedia(`(max-width: ${PHONE_WIDTH - 1}px)`).matches;
 
-if (typeof document !== 'undefined') document.documentElement.dataset.quality = LOW_POWER ? 'low' : 'high';
+if (typeof document !== 'undefined') {
+  document.documentElement.dataset.quality = LOW_POWER ? 'low' : 'high';
+  document.documentElement.dataset.phone = PHONE ? 'true' : 'false';
+}
