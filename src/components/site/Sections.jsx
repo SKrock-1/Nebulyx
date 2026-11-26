@@ -493,6 +493,7 @@ export function Contact({ onBook }) {
           <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className="focus-ring hover:text-white transition-colors">Instagram</a>
           <a href="/ai-visibility-check/" className="focus-ring hover:text-white transition-colors">Free AI check</a>
           <a href="/work/" className="focus-ring hover:text-white transition-colors">Work</a>
+          <a href="/website-design-chandigarh/" className="focus-ring hover:text-white transition-colors">Chandigarh</a>
           <a href="/journal/" className="focus-ring hover:text-white transition-colors">Journal</a>
           <a href="/about/" className="focus-ring hover:text-white transition-colors">About</a>
           <a href="/privacy.html" className="focus-ring hover:text-white transition-colors">Privacy</a>

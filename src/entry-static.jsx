@@ -11,6 +11,7 @@ import { JournalIndex, ArticlePage } from './components/site/JournalPages';
 import AiCheckPage, { AI_CHECK_PATH, AI_CHECK_FAQS } from './components/site/AiCheckPage';
 import { ARTICLES, AUTHOR, JOURNAL_PATH, articlePath } from './data/journal';
 import { WorkIndex, WorkCase } from './components/site/WorkPages';
+import LocalPage, { LOCAL_PATH, LOCAL_FAQS } from './components/site/LocalPage';
 import { PROJECTS, WORK_PATH, workPath } from './data/work';
 import { FAQS } from './data/faqs';
 import { SERVICES_DATA } from './data/services';
@@ -284,7 +285,43 @@ const WORK_ROUTES = [
   }),
 ];
 
+const LOCAL_URL = `${SITE}${LOCAL_PATH}`;
+const LOCAL_ROUTE = {
+  id: 'website-design-chandigarh',
+  path: LOCAL_PATH,
+  url: LOCAL_URL,
+  title: 'Website Design & AI Automation in Chandigarh | Nebulyx',
+  description: 'Chandigarh studio designing websites, AI automation and growth for businesses in Chandigarh, Mohali and Panchkula. Fixed price in writing; you own everything.',
+  ogImage: `${SITE}/og/websites.png`,
+  render: () => renderToString(<LocalPage />),
+  schemas: [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: 'Website design and AI automation in Chandigarh',
+      serviceType: 'Website design and development',
+      url: LOCAL_URL,
+      areaServed: [
+        { '@type': 'City', name: 'Chandigarh' },
+        { '@type': 'City', name: 'Mohali' },
+        { '@type': 'City', name: 'Panchkula' },
+      ],
+      provider: { '@type': 'ProfessionalService', name: 'Nebulyx', url: `${SITE}/`, email: CONTACT.email, address: { '@type': 'PostalAddress', addressLocality: 'Chandigarh', addressCountry: 'IN' } },
+    },
+    faqPage(LOCAL_FAQS),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+        { '@type': 'ListItem', position: 2, name: 'Chandigarh', item: LOCAL_URL },
+      ],
+    },
+  ],
+};
+
 export const EXTRA_ROUTES = [
+  LOCAL_ROUTE,
   ...WORK_ROUTES,
   AI_CHECK_ROUTE,
   ...JOURNAL_ROUTES,

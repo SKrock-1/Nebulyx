@@ -22,6 +22,10 @@ Every project starts with a short call, then a written scope, timeline and price
 - [FraudGuard](https://www.nebulyx.live/work/fraudguard/): Real-time fraud scoring engine, built for a client.
 - [YouTube automation studio](https://www.nebulyx.live/work/youtube-automation/): Research-to-upload video pipeline, built for a client.
 
+## Chandigarh
+
+- [Website design and AI automation in Chandigarh](https://www.nebulyx.live/website-design-chandigarh/): Nebulyx is based in Chandigarh and works with businesses in Chandigarh, Mohali and Panchkula, and founders worldwide.
+
 ## Free AI visibility check
 
 - [Free AI visibility check](https://www.nebulyx.live/ai-visibility-check/): A free report on what ChatGPT, Perplexity, Gemini and Claude say about a business and what to fix first.
@@ -29,6 +33,7 @@ Every project starts with a short call, then a written scope, timeline and price
 ## Journal
 
 - [Journal](https://www.nebulyx.live/journal/): Founder guides by Sonu Kumar on websites, AI automation, AI search and online stores.
+- [Reduce failed deliveries and RTO on Shopify](https://www.nebulyx.live/journal/reduce-failed-deliveries-shopify/): What to automate when a delivery fails, and where an AI agent helps.
 - [What AEO and GEO mean](https://www.nebulyx.live/journal/what-is-aeo-and-geo/)
 - [What to automate first](https://www.nebulyx.live/journal/what-to-automate-first/)
 - [The launch website checklist](https://www.nebulyx.live/journal/startup-website-checklist/)

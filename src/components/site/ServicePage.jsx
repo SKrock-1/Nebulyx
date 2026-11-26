@@ -250,6 +250,7 @@ export default function ServicePage({ id, tone = 'warm' }) {
         <a href={`mailto:${CONTACT.email}`} className={footLink}>{CONTACT.email}</a>
         <a href="/ai-visibility-check/" className={footLink}>Free AI check</a>
         <a href="/work/" className={footLink}>Work</a>
+        <a href="/website-design-chandigarh/" className={footLink}>Chandigarh</a>
         <a href="/journal/" className={footLink}>Journal</a>
         <a href="/about/" className={footLink}>About</a>
         <a href="/privacy.html" className={footLink}>Privacy</a>

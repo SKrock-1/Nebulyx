@@ -9,6 +9,64 @@ export const JOURNAL_PATH = '/journal/';
 
 export const ARTICLES = [
   {
+    slug: 'reduce-failed-deliveries-shopify',
+    title: 'How to cut failed deliveries and RTO on your Shopify store with automation',
+    seoTitle: 'Reduce Failed Deliveries (NDR) and RTO on Shopify with Automation',
+    description: 'A practical guide for Shopify sellers: why deliveries fail, what to automate first, and how an AI agent can rescue orders before they return to origin.',
+    date: '2026-11-26',
+    service: 'platform-automation',
+    kicker: 'AI automation',
+    intro: 'Every failed delivery costs you twice: the shipping out, and often the shipping back when the parcel returns to origin (RTO). For many online stores, especially those offering cash on delivery, failed deliveries quietly eat the margin. Most of the fixes are not about couriers at all. They are about acting quickly and in the right way when a delivery attempt fails.',
+    sections: [
+      {
+        h: 'Why deliveries fail',
+        list: [
+          'The customer was not home, or the office was closed when the courier arrived.',
+          'The address or phone number is incomplete, so the courier cannot find or reach the buyer.',
+          'The buyer changed their mind on a cash-on-delivery order.',
+          'The parcel arrived at a time the customer never asked for.',
+          'Nobody followed up after the first failed attempt, so the courier marked it for return.',
+        ],
+      },
+      {
+        h: 'The first 24 hours decide most rescues',
+        p: [
+          'When a courier reports a failed attempt (an NDR, or non-delivery report), the order is still recoverable. The longer it sits, the more likely it is to be sent back. Stores that rescue orders well do the same three things fast: they contact the buyer, they offer a better time or a corrected address, and they tell the courier before the next attempt.',
+          'Doing that by hand works for a few orders a day. Past that, the follow-ups slip, and the slipped ones become RTO.',
+        ],
+      },
+      {
+        h: 'What to automate first',
+        list: [
+          'Capture every failed-delivery event from your courier or shipping platform the moment it happens.',
+          'Message the buyer automatically on WhatsApp or SMS with a simple choice: a new time slot or an address fix.',
+          "Write the buyer's answer back to the Shopify order as a note and a tag, so your team sees it in one place.",
+          'Pass the new slot or address to the courier before the next attempt.',
+          'Flag anything unusual, such as a high-value order or an angry reply, to a person instead of guessing.',
+        ],
+      },
+      {
+        h: 'Where an AI agent helps, and where it must not decide alone',
+        p: [
+          "An AI agent can read the order, the customer's history and their checkout notes, and suggest the best slot, for example afternoons for a buyer who works in an office. That turns a generic reminder into a message the customer is likely to answer.",
+          'The agent should still work inside hard rules you set: business hours for office addresses, how many parcels a courier can take, and how many retries are allowed. Rules decide what is allowed; the agent only chooses between allowed options. Anything outside the rules goes to a person.',
+        ],
+      },
+      {
+        h: 'Measure it before and after',
+        p: [
+          'Before you build anything, note your current failed-delivery rate and how many of those orders return to origin each month. After a month of automation, check both again. If the numbers have not moved, look at which step is slow: the message, the customer reply, or the hand-off to the courier.',
+        ],
+      },
+      {
+        h: 'Start small',
+        p: [
+          'You do not need a large system on day one. Automating the first message and writing replies back to Shopify already removes most of the manual chasing. Add the courier hand-off and an AI agent once the basics run reliably.',
+        ],
+      },
+    ],
+  },
+  {
     slug: 'what-is-aeo-and-geo',
     title: 'What AEO and GEO mean, and how to get your business recommended by AI assistants',
     seoTitle: 'What Are AEO and GEO? Getting Recommended by AI Assistants',

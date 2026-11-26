@@ -65,6 +65,7 @@ export function Shell({ current, crumbs, title, lead, children }) {
         <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className={footLink}>Instagram</a>
         <a href="/ai-visibility-check/" className={footLink}>Free AI check</a>
         <a href="/work/" className={footLink}>Work</a>
+        <a href="/website-design-chandigarh/" className={footLink}>Chandigarh</a>
         <a href={JOURNAL_PATH} className={footLink}>Journal</a>
         <a href="/about/" className={footLink}>About</a>
         <a href="/privacy.html" className={footLink}>Privacy</a>

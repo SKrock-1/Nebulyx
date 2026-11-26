@@ -243,6 +243,7 @@ export default function AboutPage() {
         <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className={footLink}>Instagram</a>
         <a href="/ai-visibility-check/" className={footLink}>Free AI check</a>
         <a href="/work/" className={footLink}>Work</a>
+        <a href="/website-design-chandigarh/" className={footLink}>Chandigarh</a>
         <a href="/journal/" className={footLink}>Journal</a>
         <a href="/privacy.html" className={footLink}>Privacy</a>
         <a href="/terms.html" className={footLink}>Terms</a>

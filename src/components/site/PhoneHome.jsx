@@ -316,6 +316,7 @@ export default function PhoneHome({ onBook }) {
         <nav aria-label="Footer" className="grid grid-cols-2 gap-x-6">
           <a href="/ai-visibility-check/" className={footLink}>Free AI check</a>
           <a href="/work/" className={footLink}>Work</a>
+          <a href="/website-design-chandigarh/" className={footLink}>Chandigarh</a>
           <a href="/journal/" className={footLink}>Journal</a>
           <a href="/about/" className={footLink}>About</a>
           <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className={footLink}>Instagram</a>
