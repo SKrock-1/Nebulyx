@@ -2,6 +2,14 @@
 
 
 
+
+## [1.9.0] — 2026-11-26
+
+### Added
+- Chandigarh landing page (/website-design-chandigarh/) with local Service and FAQ structured data, linked from every footer
+- Journal article on cutting failed deliveries and RTO on Shopify with automation
+- Vercel Web Analytics on every page
+
 ## [1.8.0] — 2026-11-26
 
 ### Added
