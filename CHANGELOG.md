@@ -1,6 +1,25 @@
 # Changelog
 
 
+
+## [1.8.0] — 2026-11-26
+
+### Added
+- Work section at /work/ with six case studies: DataBahn, Vibe3D and Ecavo websites, plus three client AI systems with illustrated covers
+- Phone homepage in the Labs style: proof-led hero, swipeable work showcase, 3-step price builder that pre-fills the booking form
+- Strict Content Security Policy with a build check that fails on unapproved inline scripts
+
+### Changed
+- Phones skip the 3D world, smooth-scroll library and intro for faster loading and native scrolling
+- Desktop work fly-through shows all six projects and animates on one loop without re-rendering
+- Positioning: fixed price agreed in writing replaces 21-day sprint claims; booking buttons say Request
+- Booking form: no preselected answers, inline error messages, light bottom sheet on phones
+
+### Fixed
+- Lead API rejects cross-site and unexpected requests and strips line breaks from email fields
+- Cron endpoint fails closed and compares its secret in constant time
+- Off-screen illustrations pause, removing scroll jank on service pages
+
 ## [1.7.0] — 2026-11-20
 
 ### Added

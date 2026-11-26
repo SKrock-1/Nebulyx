@@ -3,6 +3,10 @@ const LEAD_TO = process.env.LEAD_TO || 'hello@nebulyx.live';
 const LEAD_FROM = process.env.LEAD_FROM || 'hello@nebulyx.live';
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LIMITS = { name: 100, email: 200, service: 120, stage: 40, preferredTime: 40, message: 3000, _form: 60 };
+const SINGLE_LINE = new Set(['name', 'email', 'service', 'stage', 'preferredTime', '_form']);
+const ALLOWED_ORIGINS = new Set(['https://www.nebulyx.live', 'https://nebulyx.live']);
+const PREVIEW_ORIGIN = /^https:\/\/nebulyx-[a-z0-9-]+\.vercel\.app$/;
+const BODY_TYPES = ['application/json', 'application/x-www-form-urlencoded'];
 
 const FIELDS = [
   ['Name', 'name'],
@@ -13,8 +17,15 @@ const FIELDS = [
   ['Message', 'message'],
 ];
 
-function clean(value, max) {
-  return typeof value === 'string' ? value.trim().slice(0, max) : '';
+function clean(value, max, singleLine = false) {
+  if (typeof value !== 'string') return '';
+  const text = singleLine ? value.replace(/[\r\n\t]+/g, ' ') : value;
+  return text.trim().slice(0, max);
+}
+
+function originAllowed(origin) {
+  if (!origin) return true;
+  return ALLOWED_ORIGINS.has(origin) || PREVIEW_ORIGIN.test(origin);
 }
 
 function escapeHtml(value) {
@@ -36,10 +47,18 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed.' });
   }
 
+  if (!originAllowed(req.headers.origin)) {
+    return res.status(403).json({ error: 'Requests are only accepted from nebulyx.live.' });
+  }
+  const type = String(req.headers['content-type'] || '').split(';')[0].trim().toLowerCase();
+  if (!BODY_TYPES.includes(type)) {
+    return res.status(415).json({ error: 'Unsupported request format.' });
+  }
+
   const body = readBody(req);
   if (clean(body.website, 200)) return res.status(200).json({ ok: true });
 
-  const lead = Object.fromEntries(Object.entries(LIMITS).map(([key, max]) => [key, clean(body[key], max)]));
+  const lead = Object.fromEntries(Object.entries(LIMITS).map(([key, max]) => [key, clean(body[key], max, SINGLE_LINE.has(key))]));
   if (!lead.name || !EMAIL_PATTERN.test(lead.email)) {
     return res.status(400).json({ error: 'Please add your name and a valid email address.' });
   }

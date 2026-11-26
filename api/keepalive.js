@@ -1,8 +1,16 @@
+import { timingSafeEqual } from 'node:crypto';
+
 const BREVO_REPORT_URL = 'https://api.brevo.com/v3/smtp/statistics/aggregatedReport?days=1';
 
+function authorized(header, secret) {
+  if (!secret || typeof header !== 'string') return false;
+  const given = Buffer.from(header);
+  const expected = Buffer.from(`Bearer ${secret}`);
+  return given.length === expected.length && timingSafeEqual(given, expected);
+}
+
 export default async function handler(req, res) {
-  const secret = process.env.CRON_SECRET;
-  if (secret && req.headers.authorization !== `Bearer ${secret}`) {
+  if (!authorized(req.headers.authorization, process.env.CRON_SECRET)) {
     return res.status(401).json({ ok: false });
   }
 
